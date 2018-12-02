@@ -1,0 +1,125 @@
+@font-face {
+    /*font-family : 'HACKED' ;*/
+    /*src: url('./HACKED.ttf');*/
+}
+
+* {
+    -fx-primary: #3961ad;
+    -fx-secondary: #101821;
+    -fx-third: #aeaeae
+}
+.root{
+    -fx-font-size: 20pt;
+    -fx-font-family: "Broadway, sans-serif";
+    -fx-background-color:  -fx-secondary;
+    -fx-base: -fx-secondary;
+    /*-fx-focus-color: -fx-primary;*/
+}
+
+/*#openingList {*/
+/*-fx-max-width: 600;*/
+/*-fx-max-height: 100%;*/
+/*}*/
+
+.button-raised{
+    -fx-padding: 0.7em 0.57em;
+    -fx-font-size: 14px;
+    -jfx-button-type: RAISED;
+    -fx-background-color: -fx-primary;
+    -fx-pref-width: 200;
+    -fx-text-fill: WHITE;
+}
+
+#openingButtons{
+    -fx-min-width:300;
+    -fx-min-height:50;
+}
+
+.newGameLabels {
+    -fx-text-fill: -fx-primary;
+    -fx-font-family: "Lucida Sans   ";
+}
+#nameGame {
+    -fx-font-size: 60px;
+}
+#nameGameMat {
+    -fx-font-size: 25px;
+}
+
+.mapImage {
+    -fx-max-width: 100;
+    -fx-max-height: 100;
+}
+
+#allSettingsBlock {
+    -fx-max-width: 600;
+}
+
+#settingsWord {
+    -fx-font-size: 50px;
+}
+
+.defaultLabel{
+    -fx-text-fill: -fx-primary;
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 17px;
+}
+
+.settingsLabel {
+    -fx-text-fill: -fx-primary;
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 25px;
+}
+
+.settingsTextField {
+    -jfx-unfocus-color : #d2d2d2;
+    -jfx-focus-color :  -fx-primary ;
+    -fx-font-size: 15px;
+}
+
+#toggleButton {
+    -jfx-toggle-color : -fx-primary;
+}
+
+
+
+#gridButton {
+    /*-webkit-fx-border: 1px solid blue;*/
+    /*-moz-fx-border: 1px solid blue;*/
+    /*-ms-fx-border: 1px solid blue;*/
+    /*-o-fx-border: 1px solid blue;*/
+    /*-khtml-fx-border: 1px solid blue;*/
+    -fx-border: 0.2px 0.2px 0.2px 0.2px;
+    -fx-border-color: -fx-primary;
+    -fx-background-color: -fx-third ;
+    -fx-border-style: solid;
+    -fx-border-radius: 0px;
+    -fx-padding: 0;
+    -fx-max-width: 10;
+    -fx-max-height: 10;
+    /*-fx-font-size: 5;*/
+
+}
+
+#gridButton:hover {
+    -fx-background-color: #3546d1;
+}
+
+#clickedButton {
+    -fx-background-color: #2d4194;
+}
+
+.gameText {
+    -fx-text-fill: -fx-primary;
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 25px;
+}
+
+#singlePlayerBox {
+    -fx-fill-width: true;
+    -fx-background-color: red;
+}
+
+.avatarStyle {
+    -fx-requested-width: 10px;
+}
