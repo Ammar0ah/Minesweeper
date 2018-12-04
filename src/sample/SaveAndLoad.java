@@ -7,35 +7,36 @@ public class SaveAndLoad extends Thread {
     File saveFile ;
     HumanPlayer firstPlayer ;
     HumanPlayer secondPlayer ;
-    private static int saveNumber;
     Grid grid ;
     public boolean isReplayGame;
+    public int  numP =0 ;
+    IdFile ID =new IdFile();
+    private int saveNumber=ID.getI();
 
 
     private ArrayList<playerMove> playerMoves = new ArrayList<>();
     int[] allsettingNumber = new int[4];
-    String[] playersNames = new String[2];
-
+    ArrayList<String> playersNames = new ArrayList<>();
 
     public void setPlayerMoves(ArrayList<playerMove> playerMoves) {
         this.playerMoves = playerMoves;
     }
     //Change to boolean
     public void saveGameStateBinary(Player firstPlayer , Player secondPlayer , Grid currentGrid, int bomb
-            , int blank , int flag, int shields){
+            , int blank , int flag, int shields, int numofp){
 
         try {
-            saveFile = new File("./src/data/SavedData"+(++saveNumber) + ".ran");
+            saveFile = new File("./src/data/SavedGames/SavedData"+(saveNumber) + ".ran");
             ObjectOutputStream objOutStream = new ObjectOutputStream(
                     new FileOutputStream(saveFile )
             );
-            if (!firstPlayer.getName().equals(secondPlayer.getName())) {
+            objOutStream.writeObject(numofp);
+            if (numofp==2) {
                 objOutStream.writeObject(firstPlayer);
                 objOutStream.writeObject(secondPlayer);
             }
             else {
                 objOutStream.writeObject(firstPlayer);
-                objOutStream.writeObject(null);
             }
             objOutStream.writeObject(currentGrid);
             objOutStream.writeObject(bomb);
@@ -50,6 +51,7 @@ public class SaveAndLoad extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        ID.setI(saveNumber);
     }
 
     public void loadGameStateBinary() {
@@ -83,13 +85,14 @@ public class SaveAndLoad extends Thread {
 
     public void getPLayersName(File file) {
         try{
-            ObjectInputStream objInputStream = new ObjectInputStream(
-                    new FileInputStream(file)
-            );
-            playersNames[0] = ((Player)objInputStream.readObject()).getName();
-            playersNames[1] = ((Player)objInputStream.readObject()).getName();
+            FileInputStream fIn = new FileInputStream(file);
+            ObjectInputStream objInputStream = new ObjectInputStream(fIn);
+            numP = (int) objInputStream.readObject();
+            playersNames.add(((Player)objInputStream.readObject()).getName());
+            if(numP==2)
+            playersNames.add(((Player)objInputStream.readObject()).getName());
             objInputStream.close();
-        }catch (IOException | ClassNotFoundException e){
+        }catch (IOException | ClassNotFoundException  e ){
             e.printStackTrace();
         }
     }

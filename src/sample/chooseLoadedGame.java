@@ -33,7 +33,7 @@ public class chooseLoadedGame {
 
     SaveAndLoad saveAndLoad = new SaveAndLoad();
 
-    File dir = new File("./src/data/");
+    File dir = new File("./src/data/SavedGames");
 
 
     public void openLoadList() {
@@ -57,9 +57,10 @@ public class chooseLoadedGame {
                     gamesName[i].setText(filesArray[i].getName()) ;
                     firstPlayerName[i] = new Label();
                     firstPlayerName[i].getStyleClass().add("defaultLabel");
-                    firstPlayerName[i].setText(saveAndLoad.playersNames[0]);
+                    firstPlayerName[i].setText(saveAndLoad.playersNames.get(0));
                     secondPlayerName[i] = new Label();
-                    secondPlayerName[i].setText(saveAndLoad.playersNames[1]);
+                    if (saveAndLoad.numP==2)
+                    secondPlayerName[i].setText(saveAndLoad.playersNames.get(1));
                     namesVbox[i] = new VBox();
                     namesVbox[i].setId("namesBox");
                     namesVbox[i].getChildren().addAll(gamesName[i] ,firstPlayerName[i] , secondPlayerName[i]);

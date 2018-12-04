@@ -42,9 +42,11 @@ public class GUIGame extends NormalGame {
     int ip = 0;
     boolean isaccepted = false;
     public boolean openedThemeSelctor;
+    ScoreBoard sb =new ScoreBoard();
+    private  String filepath;
 
     /// lists ///
-
+    ArrayList<ScoreBoard> scoreBoards= new ArrayList<>();
     ArrayList<Player> players = new ArrayList<>();
     ArrayList<playerMove> playerMoves = new ArrayList<>();
 
@@ -73,6 +75,7 @@ public class GUIGame extends NormalGame {
         actSettings = a;
         playerM = new playerMove(players.get(0));
         timer = new PlayerTimer(this);
+        filepath ="./src/data/SaverGames/SavedData1.ran";
 
 
     }
@@ -469,10 +472,10 @@ public class GUIGame extends NormalGame {
             saveOrLoad.setPlayerMoves(playerMoves);
             if (players.size() > 1)
                 saveOrLoad.saveGameStateBinary(players.get(0) , players.get(1) , grid , bombScore, blankScore,
-                        flagScore ,shieldsCount);
+                        flagScore ,shieldsCount,2);
             else
-                saveOrLoad.saveGameStateBinary(players.get(0) , players.get(0) , grid , bombScore, blankScore,
-                        flagScore ,shieldsCount );
+                saveOrLoad.saveGameStateBinary(players.get(0) ,null, grid , bombScore, blankScore,
+                        flagScore ,shieldsCount,1 );
         });
 
 
@@ -535,19 +538,27 @@ public class GUIGame extends NormalGame {
             getScoreChanges(playerM, false);
 
         if (playerM.getPlayer().getResult() == Result.winner) {
-            if (players.get(1).getScore().latestScore() > players.get(0).getScore().latestScore()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("WINNER !");
-                alert.setContentText(players.get(1).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(1).getScore().latestScore()));
-                alert.showAndWait();
+            try {
+                if (players.get(1).getScore().latestScore() > players.get(0).getScore().latestScore()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("WINNER !");
+                    alert.setContentText(players.get(1).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(1).getScore().latestScore()));
+                    alert.showAndWait();
 
-            } else {
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("WINNER !");
+                    alert.setContentText(players.get(0).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(0).getScore().latestScore()));
+                    alert.showAndWait();
+
+                }
+            }catch (IndexOutOfBoundsException e){
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("WINNER !");
                 alert.setContentText(players.get(0).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(0).getScore().latestScore()));
                 alert.showAndWait();
-
             }
+            updateScoreBoard();
             endGame();
 
             return true;
@@ -569,6 +580,7 @@ public class GUIGame extends NormalGame {
                 checkBombCells();
                 if (playerM.getPlayer().getScore().getPlayerscore() == 0) {
                     grid.printPatch();
+                    updateScoreBoard();
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("LOSER !");
                     alert.setContentText(playerM.getPlayer().name + " " + "You Lost the game.You're score is:  " + String.valueOf(playerM.getPlayer().getScore().latestScore()));
@@ -656,12 +668,30 @@ public class GUIGame extends NormalGame {
         getScoreChanges(playerM, false);
         playerMoves.add(playerM);
         if (!isaccepted) {
+            updateScoreBoard();
             checkBombCells();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Computer Lost");
             alert.setContentText("Computer Lost ... The winner is " + players.get(0).getName());
             alert.showAndWait();
         }
+    }
+    public void  updateScoreBoard(){
+        if (players.size()>1){
+            sb.setEndDate();
+            sb.setP1Name(players.get(0).getName());
+            sb.setP2Name(players.get(1).getName());
+            sb.setPlayer1Score(players.get(0).getScore());
+            sb.setPlayer2Score(players.get(1).getScore());
+            sb.setGamefilepath(filepath);
+        }
+        else {
+            sb.setEndDate();
+            sb.setP1Name(players.get(0).getName());
+            sb.setPlayer1Score(players.get(0).getScore());
+            sb.setGamefilepath(filepath);
+        }
+        sb.write(sb);
     }
 }
 
