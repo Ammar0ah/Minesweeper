@@ -694,7 +694,8 @@ public class GUIGame extends NormalGame {
             sb.setPlayer1Score(players.get(0).getScore());
             sb.setGamefilepath(filepath);
         }
-        sb.write(sb);
+        scoreBoards.add(sb);
+        sb.write(scoreBoards);
     }
 
 

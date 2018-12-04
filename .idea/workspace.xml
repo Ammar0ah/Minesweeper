@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e91b5071-5e54-4050-9a8f-f59528743df8" name="Default Changelist" comment="" />
+    <list default="true" id="e91b5071-5e54-4050-9a8f-f59528743df8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Table Pane.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Table Pane.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/GUIGame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/GameMode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/IdFile.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/ReplayGame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/SaveAndLoad.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/ScoreBoard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/chooseLoadedGame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/settingsGUI.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/startNewGameSettings.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/Score.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Score.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sample/ScoreBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/ScoreBoard.java" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -300,17 +316,25 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-1970886770">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FavoritesManager">
     <favorites_list name="Minesweeper-second_Part" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/GUIGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
+            <state relative-caret-position="371">
+              <caret line="696" column="3" selection-start-line="696" selection-start-column="3" selection-end-line="696" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -327,7 +351,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/SaveAndLoad.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
@@ -360,7 +384,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
+            <state relative-caret-position="144">
               <caret line="8" column="52" selection-start-line="8" selection-start-column="52" selection-end-line="8" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -372,7 +396,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1404">
+            <state relative-caret-position="1818">
               <caret line="101" column="61" selection-start-line="101" selection-start-column="61" selection-end-line="101" selection-end-column="61" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -393,7 +417,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/chooseLoadedGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1188">
+            <state relative-caret-position="1404">
               <caret line="78" selection-start-line="78" selection-end-line="78" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -485,26 +509,14 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="Minesweeper-JavaFx - Copy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Minesweeper-JavaFx - Copy" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Minesweeper-JavaFx - Copy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Minesweeper-JavaFx - Copy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Minesweeper-JavaFx - Copy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Minesweeper-JavaFx - Copy" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="sample" type="462c0819:PsiDirectoryNode" />
+              <item name="Minesweeper" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Minesweeper" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -641,6 +653,7 @@
       <workItem from="1543615666355" duration="738000" />
       <workItem from="1543648070972" duration="13192000" />
       <workItem from="1543784346049" duration="2143000" />
+      <workItem from="1543959683087" duration="261000" />
     </task>
     <task id="LOCAL-00001" summary="need score update">
       <created>1542830482890</created>
@@ -688,12 +701,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="140379000" />
+    <option name="totallyTimeSpent" value="140640000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4964706" visible="true" weight="0.2181208" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4964706" visible="true" weight="0.22147651" />
       <window_info id="Structure" order="1" sideWeight="0.5011442" side_tool="true" weight="0.17315437" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -707,7 +721,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32885906" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.49008498" />
+      <window_info anchor="bottom" id="Terminal" order="7" weight="0.49008498" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" weight="0.3286119" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3286119" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.34135976" />
@@ -807,8 +821,8 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/sample.fxml">
-      <provider selected="true" editor-type-id="text-editor" />
       <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/javafx-src.zip!/javafx/event/EventHandler.java" />
     <entry file="file://$PROJECT_DIR$/src/sample/HumanPlayer.java">
@@ -924,6 +938,7 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Minesweeper-JavaFx/src/sample/Score.java" />
     <entry file="file://$PROJECT_DIR$/src/sample/playerMove.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -947,7 +962,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Player.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
+        <state relative-caret-position="144">
           <caret line="8" column="52" selection-start-line="8" selection-start-column="52" selection-end-line="8" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -957,7 +972,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1404">
+        <state relative-caret-position="1818">
           <caret line="101" column="61" selection-start-line="101" selection-start-column="61" selection-end-line="101" selection-end-column="61" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -974,8 +989,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/chooseLoadedGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1188">
+        <state relative-caret-position="1404">
           <caret line="78" selection-start-line="78" selection-end-line="78" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/SaveAndLoad.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -984,21 +1009,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/GUIGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Minesweeper-JavaFx/src/sample/Score.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/SaveAndLoad.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+        <state relative-caret-position="371">
+          <caret line="696" column="3" selection-start-line="696" selection-start-column="3" selection-end-line="696" selection-end-column="3" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
