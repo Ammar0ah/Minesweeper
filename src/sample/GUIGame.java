@@ -342,7 +342,8 @@ public class GUIGame extends NormalGame {
     String themepath;
 
 
-    public Scene returnScene(int w, int h, String name, String name2, int sceneWidth, int sceneHeight, boolean themeSelector, String shieldsNum , boolean loaded) {
+    public Scene returnScene(int w, int h, String name, String name2, int sceneWidth, int sceneHeight, boolean themeSelector, String shieldsNum , boolean loaded)
+    {
         timer.setPlayerMove(playerM);
         timer.start();
         if (themeSelector) {
@@ -558,8 +559,8 @@ public class GUIGame extends NormalGame {
                 alert.setContentText(players.get(0).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(0).getScore().latestScore()));
                 alert.showAndWait();
             }
-            updateScoreBoard();
             endGame();
+            updateScoreBoard();
 
             return true;
 
@@ -580,12 +581,12 @@ public class GUIGame extends NormalGame {
                 checkBombCells();
                 if (playerM.getPlayer().getScore().getPlayerscore() == 0) {
                     grid.printPatch();
-                    updateScoreBoard();
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("LOSER !");
                     alert.setContentText(playerM.getPlayer().name + " " + "You Lost the game.You're score is:  " + String.valueOf(playerM.getPlayer().getScore().latestScore()));
                     players.remove(playerM.getPlayer());
                     alert.showAndWait();
+                    updateScoreBoard();
                 }
                 return false;
             }
@@ -668,15 +669,17 @@ public class GUIGame extends NormalGame {
         getScoreChanges(playerM, false);
         playerMoves.add(playerM);
         if (!isaccepted) {
-            updateScoreBoard();
+
             checkBombCells();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Computer Lost");
             alert.setContentText("Computer Lost ... The winner is " + players.get(0).getName());
             alert.showAndWait();
+            updateScoreBoard();
         }
     }
     public void  updateScoreBoard(){
+        scoreBoards=sb.read();
         if (players.size()>1){
             sb.setEndDate();
             sb.setP1Name(players.get(0).getName());
@@ -691,7 +694,9 @@ public class GUIGame extends NormalGame {
             sb.setPlayer1Score(players.get(0).getScore());
             sb.setGamefilepath(filepath);
         }
-        sb.write(sb);
+        scoreBoards.add(sb);
+        sb.write(scoreBoards);
+
     }
 }
 
