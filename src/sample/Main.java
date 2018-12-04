@@ -37,10 +37,9 @@ public class Main extends Application {
     String themeLight ;
     String themeDark ;
     boolean themeSelector = false;
+    ScoreBoard sb =new ScoreBoard();
     //Test Only
     chooseLoadedGame load = new chooseLoadedGame();
-
-
     GUIGame guiGame;
     settingsGUI settings = new settingsGUI();
     startNewGameSettings startmenu = new startNewGameSettings();
@@ -53,6 +52,7 @@ public class Main extends Application {
     public int flagCell = 5 ;
     public int bombCell = 10 ;
     public int shieldsCount = 0 ;
+
 
     public static String themePath = "./style.css" ;
 
@@ -99,12 +99,21 @@ public class Main extends Application {
             load.openLoadList();
         });
 
+        JFXButton ScoreBoardButton = new JFXButton("Score Board");
+        ScoreBoardButton.getStyleClass().add("button-raised");
+        ScoreBoardButton.setId("openingButtons");
+        ScoreBoardButton.setAlignment(Pos.CENTER);
+        ScoreBoardButton.setOnAction(e ->{
+           window.setScene(sb.GUIScoreBord());
+           window.setTitle("Score Bord");
+        });
+
         JFXButton QuickGameButton = new JFXButton("Quick Load Game");
         QuickGameButton.getStyleClass().add("button-raised");
         QuickGameButton.setId("openingButtons");
         QuickGameButton.setAlignment(Pos.CENTER);
         QuickGameButton.setOnAction(e ->{
-           window.setScene(guiGame.returnScene(Grid.height,Grid.width,"ammar","nader",1100,700,false,settings.shieldsCount,true));
+            window.setScene(guiGame.returnScene(Grid.height,Grid.width,"ammar","nader",1100,700,false,settings.shieldsCount,true));
         });
         JFXButton settingsButton = new JFXButton("Settings");
         settingsButton.getStyleClass().add("button-raised");
@@ -117,15 +126,23 @@ public class Main extends Application {
 
         gameOpeneingList.setMinWidth(1100/2);
         gameOpeneingList.setAlignment(Pos.CENTER);
-        VBox.setMargin(newGameButton , new Insets(150 , 20 ,20 ,80));
-        VBox.setMargin(oldgamesButton , new Insets(20 , 20 ,20 ,80));
-        VBox.setMargin(QuickGameButton , new Insets(20 , 20 ,20 ,80));
-        VBox.setMargin(settingsButton , new Insets(20 , 20 ,20 ,80));
-        VBox.setMargin(nameGameLabel , new Insets(20 , 20 ,20 ,80));
+        VBox.setMargin(newGameButton , new Insets(150 , 20 ,15 ,80));
+        VBox.setMargin(oldgamesButton , new Insets(15 , 20 ,15 ,80));
+        VBox.setMargin(ScoreBoardButton , new Insets(15 , 20 ,15 ,80));
+        VBox.setMargin(QuickGameButton , new Insets(15 , 20 ,15 ,80));
+        VBox.setMargin(settingsButton , new Insets(15 , 20 ,15 ,80));
+        VBox.setMargin(nameGameLabel , new Insets(15 , 20 ,15 ,80));
 
 //        gameOpeneingList.Insets()
         gameOpeneingList.getStylesheets().add("./style.css");
-        gameOpeneingList.getChildren().addAll(nameGameLabel , nameGameMatLabel , newGameButton ,QuickGameButton,oldgamesButton, settingsButton);
+        gameOpeneingList.getChildren().addAll(
+                nameGameLabel,
+                nameGameMatLabel ,
+                newGameButton ,
+                QuickGameButton,
+                oldgamesButton,
+                ScoreBoardButton,
+                settingsButton);
 
         VBox pictureBox = new VBox();
         imageView = new ImageView(
@@ -177,9 +194,7 @@ public class Main extends Application {
         }
 
 
-        public static void main (String[]args){
-            launch(args);
-        }
+        public static void main (String[]args){ launch(args); }
 
 
         private boolean isInt (TextField input, String message){

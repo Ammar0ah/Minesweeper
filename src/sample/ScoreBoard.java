@@ -1,5 +1,12 @@
 package sample;
 
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +25,7 @@ public class ScoreBoard implements Serializable {
     private  String filepath="./src/data/ScoreBorde.ran";
     private  String Gamefilepath= "./src/data/SavedGame/SavedData1";
 
+
     public ScoreBoard() {
 
         this.setGamefilepath();
@@ -28,8 +36,9 @@ public class ScoreBoard implements Serializable {
     private void setGamefilepath() {
         IdFile id = new IdFile();
         int i = id.getI();
-        ID=i;
+        setID(i);
         Gamefilepath="./data/SavedGame/Game"+i+".ran";
+        id.setI(i);
     }
 
 
@@ -93,14 +102,18 @@ public class ScoreBoard implements Serializable {
         Gamefilepath = gamefilepath;
     }
 
-    public void  write(ScoreBoard sb) {
+    public int getID() { return ID; }
+
+    public void setID(int ID) { this.ID = ID;}
+
+    public void  write(ArrayList<ScoreBoard> scoreBoards) {
         try {
-            ArrayList<ScoreBoard> scoreBoards =new ArrayList<>();
-            sb.read(scoreBoards);
+
             FileOutputStream fileOut = new FileOutputStream(filepath);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 
-            objectOut.writeObject(scoreBoards);
+
+             objectOut.writeObject(scoreBoards);
 
             objectOut.close();
 
@@ -114,8 +127,10 @@ public class ScoreBoard implements Serializable {
 
     }
 
-    public  void read(ArrayList<ScoreBoard> sbs){
+    public  ArrayList<ScoreBoard> read(){
+        ArrayList<ScoreBoard> sbs = new ArrayList<>();
         try {
+
             FileInputStream fileIn = new FileInputStream(filepath);
 
             ObjectInputStream objectOut = new ObjectInputStream(fileIn);
@@ -126,14 +141,74 @@ public class ScoreBoard implements Serializable {
 
             System.out.println("The Object ' ScoreBoard '  was succesfully read from the file");
 
-        } catch (Exception ex) { ex.printStackTrace(); }
 
+
+        } catch (Exception ex  ) { ex.printStackTrace();}
+        return sbs;
     }
 
 
-    public void GUIScoreBord(){
+    public Scene GUIScoreBord(){
+
         ArrayList<ScoreBoard> sbs = new ArrayList<>();
-        this.read(sbs);
+        sbs = this.read();
+        ScoreBoard sb = new ScoreBoard();
+
+        String themeLight ;
+        String themeDark ;
+
+        themeLight = getClass().getResource("../style.css").toExternalForm();
+        themeDark = getClass().getResource("../DarkStyle.css").toExternalForm();
+
+        VBox mainLoadList = new VBox();
+        HBox bordItem[] = new HBox[sbs.size()];
+        ScrollPane  mainScrollPane = new ScrollPane();
+
+        Label Idlabel[] = new Label[sbs.size()];
+        Label player1label[] = new Label[sbs.size()];
+        Label player2label[] = new Label[sbs.size()];
+        Label score1label[] = new Label[sbs.size()];
+        Label score2label[] = new Label[sbs.size()];
+        Label startTimelabel[]= new Label[sbs.size()];
+        Label endTimelabel[]= new Label[sbs.size()];
+        for(int i=0;i<sbs.size();i++){
+            sb = sbs.get(i);
+            Idlabel[i] = new Label();
+            player1label[i]= new Label();
+            player2label[i]=new Label();
+            score1label[i] = new Label();
+            score2label[i] = new Label();
+            startTimelabel[i]= new Label();
+            endTimelabel[i]= new Label();
+            bordItem[i] =new HBox();
+
+            Idlabel[i].setText(""+sb.getID());
+            player1label[i].setText(sb.getP1Name());
+            if(p2Name != null)
+            player2label[i].setText(sb.getP2Name());
+            score1label[i].setText(""+sb.getPlayer1Score().getLatestScore());
+            if(p2Name != null)
+            score2label[i].setText(""+sb.getPlayer2Score().getLatestScore());
+            startTimelabel[i].setText(""+sb.getStartDate());
+            endTimelabel[i].setText(""+sb.getEndDate());
+            bordItem[i].getStylesheets().add(themeLight);
+            bordItem[i].getChildren().addAll(
+                    Idlabel[i],
+                    player2label[i],
+                    player1label[i],
+                    score1label[i],
+                    score2label[i],
+                    startTimelabel[i],
+                    endTimelabel[i]);
+            mainLoadList.getStylesheets().add(themeLight);
+            mainLoadList.getChildren().add(bordItem[i]);
+
+        }
+
+
+        mainScrollPane.setContent(mainLoadList);
+        Scene scene = new Scene(mainScrollPane , 1100, 700);
+        return scene;
 
 
     }

@@ -8,7 +8,11 @@ public class Score implements Serializable {
     private int playerShieldScore=0;
  public int bombscore =0 ;
  public int blankscore =0 ;
+ private int latestScore;
 
+    public int getLatestScore() {
+        return playerscore+playerFlagsScore+playerShieldScore;
+    }
 
     public int getPlayerShieldScore() {
         return playerShieldScore;
