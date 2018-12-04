@@ -1,52 +1,110 @@
 package sample;
 
+
+import javafx.scene.input.MouseEvent;
+
 import java.io.*;
 import java.util.ArrayList;
 
 public class SaveAndLoad extends Thread {
-    File saveFile ;
-    HumanPlayer firstPlayer ;
-    HumanPlayer secondPlayer ;
-    Grid grid ;
-    public boolean isReplayGame;
-    public int  numP =0 ;
-    IdFile ID =new IdFile();
-    private int saveNumber=ID.getI();
-
-
+    private File saveFile;
+    public Grid grid;
+    private boolean isSettingsActivated;
+    public int numP = 0;
+    private IdFile ID = new IdFile();
+    private int saveNumber = ID.getI();
+    private GameMode gameMode;
     private ArrayList<playerMove> playerMoves = new ArrayList<>();
-    int[] allsettingNumber = new int[4];
+    private int[] allsettingNumber = new int[4];
+    private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<MouseEvent> mouseEvents = new ArrayList<>();
+    private ArrayList<Integer> timeList = new ArrayList<>();
+
     ArrayList<String> playersNames = new ArrayList<>();
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
+    }
+
+    public File getSaveFile() {
+        return saveFile;
+    }
+
+    public void setSaveFile(String saveFile) {
+        this.saveFile = new File(saveFile);
+    }
+
+    public boolean isSettingsActivated() {
+        return isSettingsActivated;
+    }
+
+    public void setSettingsActivated(boolean settingsActivated) {
+        isSettingsActivated = settingsActivated;
+    }
+
+    public GameMode getGameMode(){
+        return gameMode;
+    }
+
+    public int[] getAllsettingNumber() {
+        return allsettingNumber;
+    }
+
+    public ArrayList<playerMove> getPlayerMoves() {
+        return playerMoves;
+    }
+
+    public ArrayList<Integer> getTimeList() {
+        return timeList;
+    }
+
+    public void setTimeList(ArrayList<Integer> timeList) {
+        this.timeList = timeList;
+    }
+
+    public void setAllsettingNumber(int[] allsettingNumber) {
+        this.allsettingNumber = allsettingNumber;
+    }
+
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+    public ArrayList<MouseEvent> getMouseEvents() {
+        return mouseEvents;
+    }
+
+    public void setMouseEvents(ArrayList<MouseEvent> mouseEvents) {
+        this.mouseEvents = mouseEvents;
+    }
 
     public void setPlayerMoves(ArrayList<playerMove> playerMoves) {
         this.playerMoves = playerMoves;
     }
-    //Change to boolean
-    public void saveGameStateBinary(Player firstPlayer , Player secondPlayer , Grid currentGrid, int bomb
-            , int blank , int flag, int shields, int numofp){
+
+    public void saveGameStateBinary(ArrayList<Player> players, Grid currentGrid, int bomb
+            , int blank, int flag, int shields,ArrayList<MouseEvent>mEvents , boolean settingsChanged,ArrayList<Integer>tList) {
 
         try {
-            saveFile = new File("./src/data/SavedGames/SavedData"+(saveNumber) + ".ran");
+            saveFile = new File("./src/data/SavedGames/SavedData" + (saveNumber) + ".ran");
             ObjectOutputStream objOutStream = new ObjectOutputStream(
-                    new FileOutputStream(saveFile )
+                    new FileOutputStream(saveFile)
             );
-            objOutStream.writeObject(numofp);
-            if (numofp==2) {
-                objOutStream.writeObject(firstPlayer);
-                objOutStream.writeObject(secondPlayer);
-            }
-            else {
-                objOutStream.writeObject(firstPlayer);
-            }
+            objOutStream.writeObject(players);
             objOutStream.writeObject(currentGrid);
             objOutStream.writeObject(bomb);
             objOutStream.writeObject(blank);
             objOutStream.writeObject(flag);
             objOutStream.writeObject(shields);
-
-            for (playerMove pMove : playerMoves) {
-                objOutStream.writeObject(pMove);
-            }
+            objOutStream.writeObject(gameMode);
+            objOutStream.writeObject(mEvents);
+            objOutStream.writeObject(settingsChanged);
+            objOutStream.writeObject(tList);
+            if(gameMode == GameMode.CAN_BE_LOADED)
+            objOutStream.writeObject(playerMoves);
             objOutStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,44 +113,34 @@ public class SaveAndLoad extends Thread {
     }
 
     public void loadGameStateBinary() {
-        try{
-            FileInputStream fileInputStream = new FileInputStream(saveFile);
-            ObjectInputStream objInputStream = new ObjectInputStream(fileInputStream);
-            firstPlayer = (HumanPlayer)objInputStream.readObject();
-            secondPlayer = (HumanPlayer)objInputStream.readObject();
-            grid = (Grid)objInputStream.readObject();
-            allsettingNumber[0] = (int)objInputStream.readObject();
-            allsettingNumber[1] = (int)objInputStream.readObject();
-            allsettingNumber[2] = (int)objInputStream.readObject();
-            allsettingNumber[3] = (int)objInputStream.readObject();
-            try {
+        try {
+            ObjectInputStream objInputStream = new ObjectInputStream(new FileInputStream(saveFile));
+            players = (ArrayList<Player>) objInputStream.readObject();
+            grid = (Grid) objInputStream.readObject();
+            for (int i = 0; i < 4; i++)
+                allsettingNumber[i] = (int) objInputStream.readObject();
+            gameMode = (GameMode) objInputStream.readObject();
+            mouseEvents = (ArrayList<MouseEvent>) objInputStream.readObject();
+            isSettingsActivated = (boolean)objInputStream.readObject();
+            timeList = (ArrayList<Integer>)objInputStream.readObject();
+            if (gameMode == GameMode.CAN_BE_REPLAYED)
+                playerMoves = (ArrayList<playerMove>) objInputStream.readObject();
 
-                while (true) {
-                    playerMoves.clear();
-                    playerMoves.add((playerMove) objInputStream.readObject());
-                }
-           }
-           catch (EOFException eof){
-               grid.printPatch();
-               objInputStream.close();
-               return;
-           }
-
-        }catch (IOException | ClassNotFoundException  e){
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     public void getPLayersName(File file) {
-        try{
+        try {
             FileInputStream fIn = new FileInputStream(file);
             ObjectInputStream objInputStream = new ObjectInputStream(fIn);
             numP = (int) objInputStream.readObject();
-            playersNames.add(((Player)objInputStream.readObject()).getName());
-            if(numP==2)
-            playersNames.add(((Player)objInputStream.readObject()).getName());
+            playersNames.add(((Player) objInputStream.readObject()).getName());
+            if (numP == 2)
+                playersNames.add(((Player) objInputStream.readObject()).getName());
             objInputStream.close();
-        }catch (IOException | ClassNotFoundException  e ){
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

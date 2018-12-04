@@ -135,25 +135,24 @@ public class startNewGameSettings {
 
         Label toggleLabel = new Label("Activate Second Player");
         toggleLabel.getStyleClass().add("settingsLabel");
-        Label AutoPlayerLabel  = new Label("Activate Auto Player");
+        Label AutoPlayerLabel = new Label("Activate Auto Player");
         AutoPlayerLabel.getStyleClass().add("settingLabel");
 
-        Label autoPlayer= new Label("Activate Auto player");
+        Label autoPlayer = new Label("Activate Auto player");
         JFXToggleButton autoplayerToggleButton = new JFXToggleButton();
         autoplayerToggleButton.setSelected(false);
         autoplayerToggleButton.setId("toggleButton");
-        autoplayerToggleButton.setOnAction(e ->{
-            if(autoplayerToggleButton.isSelected()){
+        autoplayerToggleButton.setOnAction(e -> {
+            if (autoplayerToggleButton.isSelected()) {
                 player2Name.setText("");
                 player2Name.setDisable(true);
 
-            }
-            else player2Name.setDisable(false);
+            } else player2Name.setDisable(false);
         });
         HBox autoplayerBox = new HBox();
         autoplayerBox.setAlignment(Pos.CENTER);
-        HBox.setMargin(autoPlayer,new Insets(10,30,30,40));
-        autoplayerBox.getChildren().addAll(autoPlayer,autoplayerToggleButton);
+        HBox.setMargin(autoPlayer, new Insets(10, 30, 30, 40));
+        autoplayerBox.getChildren().addAll(autoPlayer, autoplayerToggleButton);
 
 
         JFXToggleButton toggleSecPlayer = new JFXToggleButton();
@@ -208,21 +207,26 @@ public class startNewGameSettings {
             players.add(p1);
             if (toggleSecPlayer.isSelected())
                 players.add(p2);
-            if(autoplayerToggleButton.isSelected())
-            {
+            if (autoplayerToggleButton.isSelected()) {
                 toggleSecPlayer.setSelected(false);
-                p2= new autoPlayer();
+                p2 = new autoPlayer();
                 p2.getShield().setShieldCount(0);
                 players.add(p2);
             }
             System.out.println(player + width + height);
             Grid grid = new Grid(this.width, this.height, bombsNum);
             System.out.println(settings.bombkScore);
-            guiGame = new GUIGame(players, settings.bombkScore, settings.blankScore, settings.flagScore, settings.shieldsCount, true);
+            if (Integer.parseInt(settings.bombkScore) > 0)
+                guiGame = new GUIGame(players, Integer.parseInt(settings.bombkScore), Integer.parseInt(settings.blankScore)
+                        , Integer.parseInt(settings.flagScore),Integer.parseInt(settings.shieldsCount), true);
+            else
+                guiGame = new GUIGame(players, Integer.parseInt(settings.bombkScore), Integer.parseInt(settings.blankScore)
+                        , Integer.parseInt(settings.flagScore),Integer.parseInt(settings.shieldsCount), false);
             guiGame.setGrid(grid);
-            window.setScene(guiGame.returnScene(this.width, this.height, player, Player2NameString, 1100, 700, themeSelector, settings.shieldsCount, true));
+            window.setScene(guiGame.returnScene(this.width, this.height, player, Player2NameString, 1100,
+                    700, themeSelector, settings.shieldsCount, true));
             window.setMaximized(true);
-            window.setOnCloseRequest(event ->guiGame.timer.interrupt());
+            window.setOnCloseRequest(event -> guiGame.timer.interrupt());
         });
 
         menu.setAlignment(Pos.CENTER);
@@ -231,7 +235,7 @@ public class startNewGameSettings {
                 add(themepath);
         menu.getChildren().
 
-                addAll(player1, player2, width, height, mines, toggle,autoplayerBox, startGameButton);
+                addAll(player1, player2, width, height, mines, toggle, autoplayerBox, startGameButton);
 
         Scene newGameSettings = new Scene(menu, 1100, 700);
         window.setScene(newGameSettings);

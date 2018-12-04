@@ -24,9 +24,9 @@ import javafx.util.Duration;
 
 public class settingsGUI {
     BorderPane borderPane = new BorderPane();
-    public static String blankScore = "1";
+    public static String blankScore = "0";
     public static String flagScore = "5";
-    public static String bombkScore = "10";
+    public static String bombkScore = "0";
     public static String shieldsCount = "0";
 
     public JFXToggleButton toggleTheme  = new JFXToggleButton();

@@ -37,6 +37,7 @@ public class chooseLoadedGame {
 
 
     public void openLoadList() {
+        int  i =0 ;
         themeLight = getClass().getResource("../style.css").toExternalForm();
         themeDark = getClass().getResource("../DarkStyle.css").toExternalForm();
         mainLoadList = new VBox();
@@ -50,11 +51,11 @@ public class chooseLoadedGame {
                 loadGameButton = new JFXButton[filesArray.length];
                 replayGameButton = new JFXButton[filesArray.length];
                 loadFileBoxes = new HBox[filesArray.length];
-                for (int i =0 ; i<filesArray.length ; i++){
-                    saveAndLoad.getPLayersName(filesArray[i]);
-                    System.out.println(filesArray[i].getName());
+                for(File file : filesArray){
+                    saveAndLoad.getPLayersName(file);
+                    System.out.println(file.getName());
                     gamesName[i] = new Label();
-                    gamesName[i].setText(filesArray[i].getName()) ;
+                    gamesName[i].setText(file.getName()) ;
                     firstPlayerName[i] = new Label();
                     firstPlayerName[i].getStyleClass().add("defaultLabel");
                     firstPlayerName[i].setText(saveAndLoad.playersNames.get(0));
@@ -77,7 +78,10 @@ public class chooseLoadedGame {
                     replayGameButton[i].setId("loadListButton");
                     HBox.setMargin(replayGameButton[i], new Insets(10 ,0 , 10 , 70));
                     replayGameButton[i].setOnAction(e -> {
-
+                        ReplayGame replayGame = new ReplayGame();
+                        replayGame.saveAndLoad.setSaveFile("./src/data/SavedGames/"+file.getName());
+                        Stage window = replayGame.init();
+                        window.show();
                     });
                     loadFileBoxes[i] = new HBox();
                     loadFileBoxes[i].getStylesheets().add(themeLight);
@@ -86,7 +90,7 @@ public class chooseLoadedGame {
                     VBox.setMargin(loadFileBoxes[i], new Insets(10));
                     mainLoadList.getStylesheets().add(themeLight);
                     mainLoadList.getChildren().add(loadFileBoxes[i]);
-
+                    i++;
                 }
                 window.setTitle("Mine Sweeper Material");
                 mainScrollPane.setContent(mainLoadList);
