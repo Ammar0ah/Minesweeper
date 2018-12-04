@@ -1,22 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e91b5071-5e54-4050-9a8f-f59528743df8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/sample/ReplayGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/GUIGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/sample/GUIGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/GameMode.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/sample/GameMode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/SaveAndLoad.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/sample/SaveAndLoad.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/chooseLoadedGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/sample/chooseLoadedGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/settingsGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/sample/settingsGUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/startNewGameSettings.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/sample/startNewGameSettings.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/gameID.ran" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/gameID.ran" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/GUIGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/GUIGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/SaveAndLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/SaveAndLoad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/chooseLoadedGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/chooseLoadedGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/settingsGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/settingsGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/startNewGameSettings.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/startNewGameSettings.java" afterDir="false" />
-    </list>
+    <list default="true" id="e91b5071-5e54-4050-9a8f-f59528743df8" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -324,12 +309,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="3309" />
+          <entry key="java" value="3337" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3309" />
+          <entry key="JAVA" value="3337" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -375,10 +360,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/SaveAndLoad.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="25">
+            <state relative-caret-position="162">
               <caret line="117" selection-start-line="117" selection-end-line="117" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -466,11 +451,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/sample/chooseLoadedGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-360">
-              <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
+            <state relative-caret-position="216">
+              <caret line="81" column="82" selection-start-line="81" selection-start-column="82" selection-end-line="81" selection-end-column="82" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -641,7 +626,7 @@
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://D:/Compressed/Nader/Minesweeper-second_Part - Copy/src/sample/settingsGUI.java&#10;player&#9;PSI&#9;JAVA://sample.Main#player" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543958653911" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543958910897" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
@@ -766,7 +751,7 @@
       <workItem from="1543615666355" duration="738000" />
       <workItem from="1543648070972" duration="13192000" />
       <workItem from="1543784346049" duration="2143000" />
-      <workItem from="1543925544524" duration="26510000" />
+      <workItem from="1543925544524" duration="26846000" />
     </task>
     <task id="LOCAL-00001" summary="need score update">
       <created>1542830482890</created>
@@ -814,7 +799,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="166889000" />
+    <option name="totallyTimeSpent" value="167225000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -827,9 +812,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4964706" visible="true" weight="0.22147651" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4964706" visible="true" weight="0.22147651" />
       <window_info id="Structure" order="1" sideWeight="0.5011442" side_tool="true" weight="0.17315437" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -838,12 +822,12 @@
       <window_info id="Favorites" order="6" sideWeight="0.5035294" side_tool="true" weight="0.2080537" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.81869686" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.28470254" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.23937677" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.42917848" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.49008498" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.49008498" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" weight="0.3286119" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3286119" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.34135976" />
@@ -1138,9 +1122,39 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/GUIGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="275" column="33" selection-start-line="275" selection-start-column="33" selection-end-line="275" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/ReplayGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/sample/chooseLoadedGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="81" column="82" selection-start-line="81" selection-start-column="82" selection-end-line="81" selection-end-column="82" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/SaveAndLoad.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25">
+        <state relative-caret-position="162">
           <caret line="117" selection-start-line="117" selection-end-line="117" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1172,36 +1186,6 @@
             <element signature="e#1135#1136#0" expanded="true" />
             <element signature="e#1204#1205#0" expanded="true" />
             <element signature="e#1250#1251#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/GUIGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="275" column="33" selection-start-line="275" selection-start-column="33" selection-end-line="275" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/ReplayGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="12" column="9" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/chooseLoadedGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-360">
-          <caret line="39" column="17" selection-start-line="39" selection-start-column="17" selection-end-line="39" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
