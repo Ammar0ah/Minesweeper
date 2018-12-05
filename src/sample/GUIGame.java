@@ -647,8 +647,7 @@ public class GUIGame extends NormalGame {
 
         if (grid.numberofFlags == grid.getNumberofMines() || (calculateBlankCells() + grid.getNumberofMines() == Grid.width * Grid.height)) {
             player.setResult(Result.winner);
-            System.out.println(player.getName() + " is the WINNER!!! :D");
-            score.updateScore(grid.getNumberofMines() * 100);
+            //score.updateScore(grid.getNumberofMines() * 100);
             endGame();
         }
 
@@ -678,6 +677,13 @@ public class GUIGame extends NormalGame {
             alert.setContentText("Computer Lost ... The winner is " + players.get(0).getName());
             alert.showAndWait();
         }
+        if(playerM.getPlayer().getResult()==Result.winner){
+            updateScoreBoard();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Computer win ");
+            alert.setContentText("Computer is The winner  " + players.get(1).getScore().getLatestScore());
+            alert.showAndWait();
+        }
     }
 
     public void updateScoreBoard() {
@@ -688,12 +694,10 @@ public class GUIGame extends NormalGame {
             sb.setPlayer1Score(players.get(0).getScore());
             sb.setPlayer2Score(players.get(1).getScore());
 
-
         } else {
             sb.setEndDate();
             sb.setP1Name(players.get(0).getName());
             sb.setPlayer1Score(players.get(0).getScore());
-
 
         }
         if(gameMode == GameMode.CAN_BE_REPLAYED){

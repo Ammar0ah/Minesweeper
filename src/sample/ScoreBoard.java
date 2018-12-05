@@ -123,7 +123,7 @@ public class ScoreBoard implements Serializable {
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 
 
-             objectOut.writeObject(scoreBoards);
+            objectOut.writeObject(scoreBoards);
 
             objectOut.close();
 
@@ -191,14 +191,11 @@ public class ScoreBoard implements Serializable {
             startTimelabel[i]= new Label();
             endTimelabel[i]= new Label();
             bordItem[i] =new HBox();
-
             Idlabel[i].setText(""+sb.getID());
             player1label[i].setText(sb.getP1Name());
-            if(p2Name != null)
-                player2label[i].setText(sb.getP2Name());
+            player2label[i].setText(sb.getP2Name());
             score1label[i].setText(""+sb.getPlayer1Score().getLatestScore());
-            if(p2Name != null)
-                score2label[i].setText(""+sb.getPlayer2Score().getLatestScore());
+            score2label[i].setText(""+sb.getPlayer2Score().getLatestScore());
             startTimelabel[i].setText(""+sb.getStartDate());
             endTimelabel[i].setText(""+sb.getEndDate());
             bordItem[i].getStylesheets().add(themeLight);
