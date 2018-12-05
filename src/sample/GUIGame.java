@@ -687,13 +687,20 @@ public class GUIGame extends NormalGame {
             sb.setP2Name(players.get(1).getName());
             sb.setPlayer1Score(players.get(0).getScore());
             sb.setPlayer2Score(players.get(1).getScore());
-            sb.setGamefilepath(filepath);
+
+
         } else {
             sb.setEndDate();
             sb.setP1Name(players.get(0).getName());
             sb.setPlayer1Score(players.get(0).getScore());
-            sb.setGamefilepath(filepath);
+
+
         }
+        if(gameMode == GameMode.CAN_BE_REPLAYED){
+            sb.setCanBeReplayed(true);
+            sb.setGamefilepath(saveOrLoad.getSaveNumber());
+        }
+        scoreBoards=sb.read();
         scoreBoards.add(sb);
         sb.write(scoreBoards);
     }

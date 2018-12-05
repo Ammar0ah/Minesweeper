@@ -20,6 +20,14 @@ public class SaveAndLoad extends Thread {
     private ArrayList<MouseEvent> mouseEvents = new ArrayList<>();
     private ArrayList<Integer> timeList = new ArrayList<>();
 
+    public int getSaveNumber() {
+        return saveNumber;
+    }
+
+    public void setSaveNumber(int saveNumber) {
+        this.saveNumber = saveNumber;
+    }
+
     ArrayList<String> playersNames = new ArrayList<>();
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;

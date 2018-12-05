@@ -6,6 +6,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -24,22 +25,35 @@ public class ScoreBoard implements Serializable {
     private String p2Name;
     private  String filepath="./src/data/ScoreBorde.ran";
     private  String Gamefilepath= "./src/data/SavedGame/SavedData1";
+    private boolean canBeReplayed=false;
 
+    public boolean isCanBeReplayed() { return canBeReplayed; }
+
+    public void setCanBeReplayed(boolean canBeReplayed) { this.canBeReplayed = canBeReplayed; }
 
     public ScoreBoard() {
-
-        this.setGamefilepath();
+        setID();
     }
 
     public String getGamefile() { return Gamefilepath; }
 
-    private void setGamefilepath() {
-        IdFile id = new IdFile();
-        int i = id.getI();
-        setID(i);
-        Gamefilepath="./data/SavedGame/Game"+i+".ran";
-        id.setI(i);
+    private void setID() {
+        try {
+            ArrayList<ScoreBoard> sbs;
+            sbs=this.read();
+            ID = sbs.get(sbs.size()-1).getID();
+            ID++;
+            this.write(sbs);
+
+        }catch (Exception e){ID=0;}
+
     }
+
+    public void setGamefilepath(int i){
+        Gamefilepath="./data/SavedGame/Game"+i+".ran";
+    }
+
+
 
 
 
@@ -98,9 +112,6 @@ public class ScoreBoard implements Serializable {
         return Gamefilepath;
     }
 
-    public void setGamefilepath(String gamefilepath) {
-        Gamefilepath = gamefilepath;
-    }
 
     public int getID() { return ID; }
 
@@ -108,7 +119,6 @@ public class ScoreBoard implements Serializable {
 
     public void  write(ArrayList<ScoreBoard> scoreBoards) {
         try {
-
             FileOutputStream fileOut = new FileOutputStream(filepath);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 
@@ -124,32 +134,32 @@ public class ScoreBoard implements Serializable {
             ex.printStackTrace();
 
         }
-
     }
 
     public  ArrayList<ScoreBoard> read(){
         ArrayList<ScoreBoard> sbs = new ArrayList<>();
         try {
+            try {
 
-            FileInputStream fileIn = new FileInputStream(filepath);
+                FileInputStream fileIn = new FileInputStream(filepath);
 
-            ObjectInputStream objectOut = new ObjectInputStream(fileIn);
+                ObjectInputStream objectOut = new ObjectInputStream(fileIn);
 
-            sbs = (ArrayList<ScoreBoard>) objectOut.readObject();
+                sbs = (ArrayList<ScoreBoard>) objectOut.readObject();
 
-            objectOut.close();
+                objectOut.close();
 
-            System.out.println("The Object ' ScoreBoard '  was succesfully read from the file");
+                System.out.println("The Object ' ScoreBoard '  was succesfully read from the file");
 
-
+            }catch (IOException e){ }
 
         } catch (Exception ex  ) { ex.printStackTrace();}
         return sbs;
     }
 
 
-    public Scene GUIScoreBord(){
-
+    public void GUIScoreBord(){
+        Stage stage =  new Stage();
         ArrayList<ScoreBoard> sbs = new ArrayList<>();
         sbs = this.read();
         ScoreBoard sb = new ScoreBoard();
@@ -185,10 +195,10 @@ public class ScoreBoard implements Serializable {
             Idlabel[i].setText(""+sb.getID());
             player1label[i].setText(sb.getP1Name());
             if(p2Name != null)
-            player2label[i].setText(sb.getP2Name());
+                player2label[i].setText(sb.getP2Name());
             score1label[i].setText(""+sb.getPlayer1Score().getLatestScore());
             if(p2Name != null)
-            score2label[i].setText(""+sb.getPlayer2Score().getLatestScore());
+                score2label[i].setText(""+sb.getPlayer2Score().getLatestScore());
             startTimelabel[i].setText(""+sb.getStartDate());
             endTimelabel[i].setText(""+sb.getEndDate());
             bordItem[i].getStylesheets().add(themeLight);
@@ -208,7 +218,10 @@ public class ScoreBoard implements Serializable {
 
         mainScrollPane.setContent(mainLoadList);
         Scene scene = new Scene(mainScrollPane , 1100, 700);
-        return scene;
+        stage.setScene(scene);
+        stage.setTitle("Score Bord");
+        stage.show();
+
 
 
     }
