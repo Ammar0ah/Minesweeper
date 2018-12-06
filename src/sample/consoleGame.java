@@ -96,7 +96,7 @@ public class consoleGame extends NormalGame {
 
                 }
                 if(pMove.isPossibleToMove()) {
-                    b = game.acceptMove(pMove, pMove.getMoveType(), players);
+                    b = game.acceptMove(pMove, players);
                     if (!b) {
                         if( !player.isAuto && player.getShield().getShieldCount()!=0)
                         {

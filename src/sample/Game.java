@@ -47,7 +47,7 @@ public abstract class Game {
     }
 
     //check the cell status and change the score according to it
-    public abstract boolean acceptMove(playerMove playerMove, moveType moveType,ArrayList<Player> players);
+    public abstract boolean acceptMove(playerMove playerMove,ArrayList<Player> players);
 
     // open all the cells in the game when player loses
     protected abstract void checkBombCells();

@@ -62,7 +62,7 @@ public class consoleMain {
                     pMove = player.getplayermove(grid);
 
 
-                b = game.acceptMove(pMove, pMove.getMoveType(), players);
+                b = game.acceptMove(pMove, players);
                 if (!b) {
                     pMove.getPlayer().setResult(Result.loser);
                     pMove.getPlayer().setScore(0);

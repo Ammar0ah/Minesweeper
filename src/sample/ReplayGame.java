@@ -9,18 +9,40 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class ReplayGame {
+public class    ReplayGame {
    public SaveAndLoad saveAndLoad = new SaveAndLoad();
     GUIGame guiGame = new GUIGame();
     Stage window = new Stage();
     BorderPane borderPane = new BorderPane();
 
-    private void replayGame() {
+    private void loadInfos() {
         saveAndLoad.loadGameStateBinary();
         int[] settings = saveAndLoad.getAllsettingNumber();
         guiGame = new GUIGame(saveAndLoad.getPlayers(), settings[0], settings[1], settings[2], settings[3],
                 saveAndLoad.isSettingsActivated());
+    }
 
+    public Stage init() {
+        loadInfos();
+        guiGame.grid = saveAndLoad.getGrid();
+        guiGame.gridPane = new GridPane();
+        guiGame.gridPane.setAlignment(Pos.CENTER);
+        guiGame.gridPane.setStyle("-fx-border-style: solid ; -fx-border-width: 2px ;");
+        for (int i = 0; i < guiGame.grid.getHeight(); i++) {
+            for (int j = 0; j < guiGame.grid.getWidth(); j++) {
+                guiGame.grid.getGameGround()[i][j].setState(squareState.STATE_CLOSED);
+                Button gridButton = new Button("");
+                gridButton.setId("gridButton");
+                gridButton.setPrefSize(window.getWidth()/guiGame.grid.getWidth(),
+                        window.getHeight()/guiGame.grid.getHeight());
+                gridButton.setMinHeight(30);
+                gridButton.setMinWidth(40);
+                GridPane.setMargin(gridButton, new Insets(1));
+                guiGame.gridPane.getChildren().add(gridButton);
+                guiGame.gridPane.setConstraints(gridButton, j, i);
+            }
+        }
+        guiGame.gridPane.getStylesheets().add("./style.css");
         for (int i = 0; i < saveAndLoad.getPlayerMoves().size(); i++) {
             try {
                 Thread.sleep(1000);
@@ -28,30 +50,11 @@ public class ReplayGame {
                 e.printStackTrace();
             }
             playerMove pMove = saveAndLoad.getPlayerMoves().get(i);
-            guiGame.OnClick(saveAndLoad.getMouseEvents().get(i), pMove.getSquare(), new Label(pMove.getPlayer().getName()));
-
+            guiGame.acceptMove(pMove,saveAndLoad.getPlayers());
         }
-    }
 
-    public Stage init() {
-        guiGame.gridPane = new GridPane();
-        guiGame.gridPane.setAlignment(Pos.CENTER);
-        guiGame.gridPane.setStyle("-fx-border-style: solid ; -fx-border-width: 2px ; -fx-border-color: red ;");
-        for (int i = 0; i < saveAndLoad.grid.getHeight(); i++) {
-            for (int j = 0; j < saveAndLoad.grid.getWidth(); j++) {
-                Button gridButton = new Button("");
-                gridButton.setId("gridButton");
-               // gridButton.setPrefSize(buttonWidth, buttonHeight);
-                gridButton.setMinHeight(30);
-                gridButton.setMinWidth(40);
-                GridPane.setMargin(gridButton, new Insets(1));
-                guiGame.gridPane.getChildren().add(gridButton);
-                GridPane.setConstraints(gridButton, j, i);
-            }
-        }
         borderPane.setCenter(guiGame.gridPane);
         window.setScene(new Scene(borderPane));
-        replayGame();
         return window;
     }
 

@@ -113,13 +113,13 @@ public class GUIGame extends NormalGame {
     }
 
     @Override
-    public boolean acceptMove(playerMove playerMove, moveType mType, ArrayList<Player> players) {
+    public boolean acceptMove(playerMove playerMove, ArrayList<Player> players) {
         Square cell = playerMove.getSquare();
 
         int i = cell.getI();
         int j = cell.getJ();
         Button btn = getButtonByRowAndColumn(i, j, gridPane);
-        if (cell.getState() == squareState.STATE_CLOSED && mType == moveType.Reveal) {
+        if (cell.getState() == squareState.STATE_CLOSED && playerMove.getMoveType() == moveType.Reveal) {
             if (!cell.isHasBomb()) {
                 openBlankCells(i, j, playerMove);
                 if (playerMove.getPlayer().isAuto())
@@ -127,10 +127,10 @@ public class GUIGame extends NormalGame {
 
                 return true;
             }
-        } else if (cell.getState() == squareState.STATE_FLAG && mType == moveType.Unmark) {
+        } else if (cell.getState() == squareState.STATE_FLAG && playerMove.getMoveType() == moveType.Unmark) {
             btn.setGraphic(null);
             return true;
-        } else if (cell.getState() == squareState.STATE_CLOSED && mType == moveType.Mark) {
+        } else if (cell.getState() == squareState.STATE_CLOSED && playerMove.getMoveType() == moveType.Mark) {
             Image image = new Image(getClass().getResourceAsStream("flag.png"), 20, 20, true, true);
             btn.setGraphic(new ImageView(image));
             cell.setState(squareState.STATE_FLAG);
@@ -157,7 +157,8 @@ public class GUIGame extends NormalGame {
         if (playerMove.getPlayer().isAuto() && cell.getState() == squareState.STATE_OPENED) {
             autoPlayer autoPlayer = (autoPlayer) playerMove.getPlayer();
             playerMove = autoPlayer.dumbMove(grid);
-            return acceptMove(playerMove, moveType.Reveal, players);
+            playerMove.setMoveType(moveType.Reveal);
+            return acceptMove(playerMove, players);
         }
         return false;
     }
@@ -288,7 +289,6 @@ public class GUIGame extends NormalGame {
                 gridPane.getChildren().add(gridButton);
                 GridPane.setConstraints(gridButton, j, i);
                 gridButton.setOnMouseClicked(event -> {
-                    mouseEvents.add(event);
                     timeList.add(timer.getTimer());
                     Square square = grid.getIndex(gridPane.getRowIndex(gridButton), gridPane.getColumnIndex(gridButton));
                     boolean result = OnClick(event, square, currPlayerLabel);
@@ -303,13 +303,12 @@ public class GUIGame extends NormalGame {
 
 
     public GridPane loadedGridPane(int buttonWidth, int buttonHeight) {
-        saveOrLoad.loadGameStateBinary();
         mouseEvents = saveOrLoad.getMouseEvents();
         timeList = saveOrLoad.getTimeList();
-        Square gameGround[][] = saveOrLoad.grid.getGameGround();
+        Square gameGround[][] = saveOrLoad.getGrid().getGameGround();
         gridPane = new GridPane();
-        for (int i = 0; i < saveOrLoad.grid.getHeight(); i++) {
-            for (int j = 0; j < saveOrLoad.grid.getWidth(); j++) {
+        for (int i = 0; i < saveOrLoad.getGrid().getHeight(); i++) {
+            for (int j = 0; j < saveOrLoad.getGrid().getWidth(); j++) {
                 Button gridButton = new Button("");
                 gridButton.setId("gridButton");
                 gridButton.setPrefSize(buttonWidth, buttonHeight);
@@ -330,9 +329,8 @@ public class GUIGame extends NormalGame {
                 gridPane.getChildren().add(gridButton);
                 GridPane.setConstraints(gridButton, j, i);
                 gridButton.setOnMouseClicked(event -> {
-                    mouseEvents.add(event);
                     timeList.add(timer.getTimer());
-                    Square square = saveOrLoad.grid.getIndex(GridPane.getRowIndex(gridButton), GridPane.getColumnIndex(gridButton));
+                    Square square = saveOrLoad.getGrid().getIndex(GridPane.getRowIndex(gridButton), GridPane.getColumnIndex(gridButton));
                     boolean result = OnClick(event, square, currPlayerLabel);
                     if (!result)
                         players.remove(playerM.getPlayer());
@@ -526,16 +524,21 @@ public class GUIGame extends NormalGame {
         playerM.setSquare(square);
         playerMoves.add(playerM);
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
-            isaccepted = acceptMove(playerM, moveType.Reveal, players);
+            playerM.setMoveType(moveType.Reveal);
+            isaccepted = acceptMove(playerM, players);
 
         } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
-            if (playerM.getSquare().getState() == squareState.STATE_FLAG)
-                isaccepted = acceptMove(playerM, moveType.Unmark, players);
-            else
-                isaccepted = acceptMove(playerM, moveType.Mark, players);
+            if (playerM.getSquare().getState() == squareState.STATE_FLAG) {
+                playerM.setMoveType(moveType.Unmark);
+
+                isaccepted = acceptMove(playerM, players);
+            }else{
+                playerM.setMoveType(moveType.Mark);
+                isaccepted = acceptMove(playerM, players);}
         }
         getScoreChanges(playerM);
         if (playerM.getPlayer().getResult() == Result.winner) {
+            gameMode = GameMode.CAN_BE_REPLAYED;
             try {
                 if (players.get(1).getScore().latestScore() > players.get(0).getScore().latestScore()) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -573,6 +576,7 @@ public class GUIGame extends NormalGame {
 
                 return true;
             } else {
+                gameMode = GameMode.CAN_BE_REPLAYED;
                 playerM.getPlayer().setResult(Result.loser);
                 playerM.getPlayer().setScore(0);
                 checkBombCells();
@@ -593,12 +597,7 @@ public class GUIGame extends NormalGame {
 
         if (players.size() > 1 && players.get(1).isAuto())
             autoMove();
-        for (Player p : players) {
-            if (p.getResult() == Result.loser || p.getResult() == Result.winner) {
-                gameMode = GameMode.CAN_BE_REPLAYED;
-            }
 
-        }
         return true;
     }
 
@@ -667,7 +666,8 @@ public class GUIGame extends NormalGame {
     public void autoMove() {
         player = this.gameRules.decideNextPlayer(players, 1);
         playerM = ((autoPlayer) player).dumbMove(grid);
-        boolean isaccepted = acceptMove(playerM, moveType.Reveal, players);
+        playerM.setMoveType(moveType.Reveal);
+        boolean isaccepted = acceptMove(playerM, players);
         getScoreChanges(playerM);
         playerMoves.add(playerM);
         if (!isaccepted) {
