@@ -48,12 +48,12 @@ public class GUIGame extends NormalGame {
     ScoreBoard sb = new ScoreBoard();
     private String filepath;
     GameMode gameMode;
+    private DataInfo dataInfo;
     /// lists ///
     ArrayList<ScoreBoard> scoreBoards = new ArrayList<>();
     ArrayList<Player> players = new ArrayList<>();
     ArrayList<playerMove> playerMoves = new ArrayList<>();
-    ArrayList<MouseEvent> mouseEvents = new ArrayList<>();
-    ArrayList<Integer> timeList  = new ArrayList<>();
+    ArrayList<Integer> timeList = new ArrayList<>();
     /// gui ///
 
     ImageView timerCircle = new ImageView(
@@ -70,25 +70,28 @@ public class GUIGame extends NormalGame {
 
     //// contsructors ////
 
-    public GUIGame(ArrayList<Player> _players,int bmb, int blnk, int flag, int shields, boolean a) {
+    public GUIGame(ArrayList<Player> _players, Grid grid1, int bmb, int blnk, int flag, int shields, boolean a) {
         this.players = _players;
         bombScore = bmb;
         blankScore = blnk;
         flagScore = flag;
         shieldsCount = shields;
         actSettings = a;
+        grid = grid1;
         playerM = new playerMove(players.get(0));
         timer = new PlayerTimer(this);
         filepath = "./src/data/SaverGames/SavedData1.ran";
         gameMode = GameMode.CAN_BE_LOADED;
+        dataInfo = new DataInfo(grid, _players, bmb, blnk, flag, shields, a);
 
     }
 
-    public GUIGame(ArrayList<Player> _players) {
+    public GUIGame(ArrayList<Player> _players, Grid grid1) {
         this.players = _players;
+        grid = grid1;
         playerM = new playerMove(players.get(0));
         timer = new PlayerTimer(this);
-
+        dataInfo = new DataInfo(grid, _players);
 
     }
 
@@ -168,8 +171,8 @@ public class GUIGame extends NormalGame {
     protected void checkBombCells() {
         int score = playerM.getPlayer().getScore().getPlayerscore();
 
-        for (int i = 0; i < Grid.height; i++) {
-            for (int j = 0; j < Grid.width; j++) {
+        for (int i = 0; i < grid.getHeight(); i++) {
+            for (int j = 0; j < grid.getWidth(); j++) {
                 Square temp = grid.getGameGround()[i][j];
                 Button btn = getButtonByRowAndColumn(i, j, gridPane);
                 if (temp.isHasBomb() && (temp.getState() == squareState.STATE_CLOSED)) {
@@ -289,7 +292,7 @@ public class GUIGame extends NormalGame {
                 gridPane.getChildren().add(gridButton);
                 GridPane.setConstraints(gridButton, j, i);
                 gridButton.setOnMouseClicked(event -> {
-                    timeList.add(timer.getTimer());
+                    dataInfo.getTimeList().add(timer.getTimer());
                     Square square = grid.getIndex(gridPane.getRowIndex(gridButton), gridPane.getColumnIndex(gridButton));
                     boolean result = OnClick(event, square, currPlayerLabel);
                     if (!result)
@@ -303,12 +306,11 @@ public class GUIGame extends NormalGame {
 
 
     public GridPane loadedGridPane(int buttonWidth, int buttonHeight) {
-        mouseEvents = saveOrLoad.getMouseEvents();
-        timeList = saveOrLoad.getTimeList();
-        Square gameGround[][] = saveOrLoad.getGrid().getGameGround();
+        dataInfo = saveOrLoad.get_dataInfo();
+        Square gameGround[][] = saveOrLoad.get_dataInfo().getGrid().getGameGround();
         gridPane = new GridPane();
-        for (int i = 0; i < saveOrLoad.getGrid().getHeight(); i++) {
-            for (int j = 0; j < saveOrLoad.getGrid().getWidth(); j++) {
+        for (int i = 0; i < saveOrLoad.get_dataInfo().getGrid().getHeight(); i++) {
+            for (int j = 0; j < saveOrLoad.get_dataInfo().getGrid().getWidth(); j++) {
                 Button gridButton = new Button("");
                 gridButton.setId("gridButton");
                 gridButton.setPrefSize(buttonWidth, buttonHeight);
@@ -329,8 +331,8 @@ public class GUIGame extends NormalGame {
                 gridPane.getChildren().add(gridButton);
                 GridPane.setConstraints(gridButton, j, i);
                 gridButton.setOnMouseClicked(event -> {
-                    timeList.add(timer.getTimer());
-                    Square square = saveOrLoad.getGrid().getIndex(GridPane.getRowIndex(gridButton), GridPane.getColumnIndex(gridButton));
+                    dataInfo.getTimeList().add(timer.getTimer());
+                    Square square = saveOrLoad.get_dataInfo().getGrid().getIndex(GridPane.getRowIndex(gridButton), GridPane.getColumnIndex(gridButton));
                     boolean result = OnClick(event, square, currPlayerLabel);
                     if (!result)
                         players.remove(playerM.getPlayer());
@@ -469,14 +471,13 @@ public class GUIGame extends NormalGame {
         JFXButton saveGameButton = new JFXButton("save");
         saveGameButton.getStyleClass().add("button-raised");
         saveGameButton.setOnAction(e -> {
-            saveOrLoad.setPlayerMoves(playerMoves);
-            saveOrLoad.setGameMode(gameMode);
-            saveOrLoad.setMouseEvents(mouseEvents);
-            saveOrLoad.saveGameStateBinary(players, grid, bombScore, blankScore,
-                    flagScore, shieldsCount,mouseEvents,actSettings,timeList);
+            dataInfo.setGameMode(gameMode);
+            dataInfo.setPlayerMoves(playerMoves);
+            saveOrLoad.saveGameStateBinary(dataInfo);
 
         });
-
+        HBox topItems = new HBox();
+        topItems.getChildren().addAll(saveGameButton, timerView);
 
         borderPane.setLeft(leftMenu);
         if (players.size() > 1) {
@@ -485,7 +486,7 @@ public class GUIGame extends NormalGame {
 
         borderPane.setBottom(downMenu);
         borderPane.setCenter(gridPane);
-        borderPane.setTop(saveGameButton);
+        borderPane.setTop(topItems);
         borderPane.setMinWidth(50);
         borderPane.setMinHeight(100);
         gridScene = new Scene(borderPane);
@@ -522,7 +523,9 @@ public class GUIGame extends NormalGame {
             playerM.setPlayer(player);
         }
         playerM.setSquare(square);
-        playerMoves.add(playerM);
+        playerMove pm = playerM;
+        playerMoves.add(pm);
+        System.out.println(playerM.getSquare().getI() + " " + playerM.getSquare().getJ());
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             playerM.setMoveType(moveType.Reveal);
             isaccepted = acceptMove(playerM, players);
@@ -532,39 +535,15 @@ public class GUIGame extends NormalGame {
                 playerM.setMoveType(moveType.Unmark);
 
                 isaccepted = acceptMove(playerM, players);
-            }else{
+            } else {
                 playerM.setMoveType(moveType.Mark);
-                isaccepted = acceptMove(playerM, players);}
-        }
-        getScoreChanges(playerM);
-        if (playerM.getPlayer().getResult() == Result.winner) {
-            gameMode = GameMode.CAN_BE_REPLAYED;
-            try {
-                if (players.get(1).getScore().latestScore() > players.get(0).getScore().latestScore()) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("WINNER !");
-                    alert.setContentText(players.get(1).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(1).getScore().latestScore()));
-                    alert.showAndWait();
-
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("WINNER !");
-                    alert.setContentText(players.get(0).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(0).getScore().latestScore()));
-                    alert.showAndWait();
-
-                }
-            } catch (IndexOutOfBoundsException e) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("WINNER !");
-                alert.setContentText(players.get(0).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(0).getScore().latestScore()));
-                alert.showAndWait();
+                isaccepted = acceptMove(playerM, players);
             }
-            updateScoreBoard();
-            endGame();
+        }
 
-            return true;
+        getScoreChanges(playerM);
 
-        } else if (!isaccepted) {
+        if (!isaccepted) {
             if (!player.isAuto && player.getShield().getShieldCount() != 0) {
                 player.getShield().updateShildCount(-1);
                 player.setResult(Result.shielded);
@@ -588,6 +567,7 @@ public class GUIGame extends NormalGame {
                     alert.setContentText(playerM.getPlayer().name + " " + "You Lost the game.You're score is:  " + String.valueOf(playerM.getPlayer().getScore().latestScore()));
                     players.remove(playerM.getPlayer());
                     alert.showAndWait();
+                    timer.interrupt();
                 }
                 return false;
             }
@@ -644,17 +624,50 @@ public class GUIGame extends NormalGame {
         } else
             score.updateScore((10 + numOfentries - 1));
 
-        if (grid.numberofFlags == grid.getNumberofMines() || (calculateBlankCells() + grid.getNumberofMines() == Grid.width * Grid.height)) {
+        if (grid.numberofFlags == grid.getNumberofMines() || (calculateBlankCells() + grid.getNumberofMines() == grid.getWidth() * grid.getHeight())) {
             player.setResult(Result.winner);
             //score.updateScore(grid.getNumberofMines() * 100);
             endGame();
+        }
+        if (playerM.getPlayer().getResult() == Result.winner) {
+            for (playerMove pm : playerMoves) {
+                System.out.println("The moves list");
+                System.out.println(pm.getSquare().getI() + " " + pm.getSquare().getJ());
+            }
+            gameMode = GameMode.CAN_BE_REPLAYED;
+            timer.interrupt();
+
+            try {
+                if (players.get(1).getScore().latestScore() > players.get(0).getScore().latestScore()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("WINNER !");
+                    alert.setContentText(players.get(1).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(1).getScore().latestScore()));
+                    alert.showAndWait();
+
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("WINNER !");
+                    alert.setContentText(players.get(0).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(0).getScore().latestScore()));
+                    alert.showAndWait();
+
+                }
+
+            } catch (IndexOutOfBoundsException e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("WINNER !");
+                alert.setContentText(players.get(0).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(0).getScore().latestScore()));
+                alert.showAndWait();
+            }
+            updateScoreBoard();
+            endGame();
+
         }
 
     }
 
     public void endGame() {
-        for (int i = 0; i < Grid.height; i++)
-            for (int j = 0; j < Grid.width; j++) {
+        for (int i = 0; i < grid.getHeight(); i++)
+            for (int j = 0; j < grid.getWidth(); j++) {
                 Square cell = grid.getIndex(i, j);
                 Button button = getButtonByRowAndColumn(i, j, gridPane);
                 if (cell.getState() == squareState.STATE_FLAG || cell.getState() == squareState.STATE_CLOSED)
@@ -677,7 +690,7 @@ public class GUIGame extends NormalGame {
             alert.setContentText("Computer Lost ... The winner is " + players.get(0).getName());
             alert.showAndWait();
         }
-        if(playerM.getPlayer().getResult()==Result.winner){
+        if (playerM.getPlayer().getResult() == Result.winner) {
             updateScoreBoard();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Computer win ");
@@ -700,11 +713,11 @@ public class GUIGame extends NormalGame {
             sb.setPlayer1Score(players.get(0).getScore());
 
         }
-        if(gameMode == GameMode.CAN_BE_REPLAYED){
+        if (gameMode == GameMode.CAN_BE_REPLAYED) {
             sb.setCanBeReplayed(true);
             sb.setGamefilepath(saveOrLoad.getSaveNumber());
         }
-        scoreBoards=sb.read();
+        scoreBoards = sb.read();
         scoreBoards.add(sb);
         sb.write(scoreBoards);
     }

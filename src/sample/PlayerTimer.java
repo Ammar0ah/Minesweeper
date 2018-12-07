@@ -76,7 +76,7 @@ public class PlayerTimer extends Thread {
 
                 });
                 if (Thread.interrupted()) {
-                    break;
+                    return;
                 }
 
             } catch (InterruptedException | IllegalStateException e) {

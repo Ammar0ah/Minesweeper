@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Grid implements Serializable {
-    public static int width;
-    public static int height;
+    public  int width;
+    public  int height;
     private char[] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
     public int numberofMines = 0;
     public int numberofFlags = 0;
@@ -24,7 +24,7 @@ public class Grid implements Serializable {
         this.numberofMines = numberofMines;
     }
 
-    public static int getHeight() {
+    public  int getHeight() {
         return height;
     }
 

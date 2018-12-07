@@ -217,12 +217,11 @@ public class startNewGameSettings {
             Grid grid = new Grid(this.width, this.height, bombsNum);
             System.out.println(settings.bombkScore);
             if (Integer.parseInt(settings.bombkScore) > 0)
-                guiGame = new GUIGame(players, Integer.parseInt(settings.bombkScore), Integer.parseInt(settings.blankScore)
+                guiGame = new GUIGame(players,grid, Integer.parseInt(settings.bombkScore), Integer.parseInt(settings.blankScore)
                         , Integer.parseInt(settings.flagScore),Integer.parseInt(settings.shieldsCount), true);
             else
-                guiGame = new GUIGame(players, Integer.parseInt(settings.bombkScore), Integer.parseInt(settings.blankScore)
+                guiGame = new GUIGame(players,grid, Integer.parseInt(settings.bombkScore), Integer.parseInt(settings.blankScore)
                         , Integer.parseInt(settings.flagScore),Integer.parseInt(settings.shieldsCount), false);
-            guiGame.setGrid(grid);
             window.setScene(guiGame.returnScene(this.width, this.height, player, Player2NameString, 1100,
                     700, themeSelector, settings.shieldsCount, true));
             window.setMaximized(true);

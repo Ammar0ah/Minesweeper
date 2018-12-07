@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class NormalGame extends Game {
     @Override
-    public boolean acceptMove(playerMove playerMove,ArrayList<Player> players) {
+    public boolean acceptMove(playerMove playerMove, ArrayList<Player> players) {
 
         try {
             Square cell = playerMove.getSquare();
@@ -20,11 +20,11 @@ public class NormalGame extends Game {
                 return true;
             } else if (cell.isHasBomb()) {
                 cell.setState(squareState.STATE_OPENED);
-                if(players.size() == 1)
+                if (players.size() == 1)
                     cell.setMark("$");
                 return false;
-            } else if (cell.getState() == squareState.STATE_CLOSED && (playerMove.getMoveType()== moveType.Reveal)) {
-                openBlankCells(i, j,playerMove);
+            } else if (cell.getState() == squareState.STATE_CLOSED && (playerMove.getMoveType() == moveType.Reveal)) {
+                openBlankCells(i, j, playerMove);
                 return true;
             } else if (cell.getState() == squareState.STATE_FLAG && (playerMove.getMoveType() == moveType.Unmark)) {
                 cell.setMark("#");
@@ -33,8 +33,8 @@ public class NormalGame extends Game {
                 return true;
             } else if (cell.getState() == squareState.STATE_OPENED || cell.isClicked()) {
                 System.out.println("Already Opened Try another one!!!");
-                playerMove p =playerMove.getPlayer().getplayermove(grid);
-                return acceptMove(p,players);
+                playerMove p = playerMove.getPlayer().getplayermove(grid);
+                return acceptMove(p, players);
             }
         } catch (ArrayIndexOutOfBoundsException ex) {
             System.out.println(ex.getMessage());
@@ -46,8 +46,8 @@ public class NormalGame extends Game {
 
     @Override
     protected void checkBombCells() {
-        for (int i = 0; i < Grid.height; i++) {
-            for (int j = 0; j < Grid.width; j++) {
+        for (int i = 0; i < grid.getHeight(); i++) {
+            for (int j = 0; j < grid.getWidth(); j++) {
 
                 Square temp = grid.getGameGround()[i][j];
                 if (temp.isHasBomb() && (temp.getState() == squareState.STATE_CLOSED)) {
@@ -67,9 +67,8 @@ public class NormalGame extends Game {
     }
 
 
-
     @Override
-    protected int openBlankCells(int i, int j,playerMove playerMove) {
+    protected int openBlankCells(int i, int j, playerMove playerMove) {
 
         if (!isSafe(i, j))
             return numOfentries;
@@ -85,7 +84,7 @@ public class NormalGame extends Game {
             cell.setState(squareState.STATE_OPENED);
             cell.setClicked(true);
 
-            if(cell.isHasShield() && !playerMove.getPlayer().isAuto()){
+            if (cell.isHasShield() && !playerMove.getPlayer().isAuto()) {
                 playerMove.getPlayer().getShield().updateShildCount(1);
                 cell.setMark("H");
                 cell.setState(squareState.STATE_OPENED);

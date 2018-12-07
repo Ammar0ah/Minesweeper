@@ -15,8 +15,8 @@ public class autoPlayer extends Player {
     }
 
     public playerMove dumbMove(Grid grid) {
-        double randomi = Math.random()*(Grid.height-1);
-        double randomj = Math.random()*(Grid.width-1);
+        double randomi = Math.random()*(grid.getHeight()-1);
+        double randomj = Math.random()*(grid.getWidth()-1);
         int i = (int) Math.round(randomi);
         int j = (int) Math.round(randomj);
         playerMove p = new playerMove(this);

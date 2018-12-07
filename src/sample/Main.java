@@ -112,7 +112,7 @@ public class Main extends Application {
         QuickGameButton.setId("openingButtons");
         QuickGameButton.setAlignment(Pos.CENTER);
         QuickGameButton.setOnAction(e ->{
-            window.setScene(guiGame.returnScene(Grid.height,Grid.width,"ammar","nader",1100,700,false,settings.shieldsCount,true));
+            window.setScene(guiGame.returnScene(guiGame.grid.getHeight(),guiGame.grid.getWidth(),"ammar","nader",1100,700,false,settings.shieldsCount,true));
         });
         JFXButton settingsButton = new JFXButton("Settings");
         settingsButton.getStyleClass().add("button-raised");

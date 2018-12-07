@@ -67,7 +67,7 @@ public abstract class Game {
             else if(square.getState() == squareState.STATE_FLAG && square.isHasBomb()) {
                 score.updateFlagsScore(5);
                 grid.numberofFlags++;
-                if(player.numberOfFlags == grid.getNumberofMines() || (calculateBlankCells() - grid.getNumberofMines() == Grid.width*Grid.height)) {
+                if(player.numberOfFlags == grid.getNumberofMines() || (calculateBlankCells() - grid.getNumberofMines() == grid.getWidth()*grid.getHeight())) {
                     player.setResult(Result.winner);
                     System.out.println(player.getName()+" is the WINNER!!! :D");
                     score.updateScore(grid.getNumberofMines() * 100);
@@ -90,9 +90,9 @@ public abstract class Game {
 
     protected   int calculateBlankCells(){
         int calc =0 ;
-        for (int i =0 ; i<Grid.height ; i++)
+        for (int i =0 ; i<grid.getHeight() ; i++)
         {
-            for (int j=0 ; j < Grid.width ; j++){
+            for (int j=0 ; j < grid.getWidth() ; j++){
                 if(!grid.getGameGround()[i][j].isHasBomb() && grid.getGameGround()[i][j].getState()== squareState.STATE_OPENED)
                     calc++;
             }
@@ -101,7 +101,7 @@ public abstract class Game {
     }
 
     public boolean isSafe(int i, int j) {
-        return (i >= 0 && i < Grid.height) && (j >= 0 && j < Grid.width);
+        return (i >= 0 && i <grid.getHeight()) && (j >= 0 && j < grid.getWidth());
     }
 
     //searches for the mines
