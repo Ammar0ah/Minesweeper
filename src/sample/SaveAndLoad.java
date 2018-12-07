@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class SaveAndLoad extends Thread {
     private File saveFile;
-    private Grid grid;
+    public Grid grid;
     private boolean isSettingsActivated;
     public int numP = 0;
     private IdFile ID = new IdFile();
@@ -26,6 +26,14 @@ public class SaveAndLoad extends Thread {
 
     public void setGrid(Grid grid) {
         this.grid = grid;
+    }
+
+    public int getSaveNumber() {
+        return saveNumber;
+    }
+
+    public void setSaveNumber(int saveNumber) {
+        this.saveNumber = saveNumber;
     }
 
     ArrayList<String> playersNames = new ArrayList<>();
@@ -103,16 +111,15 @@ public class SaveAndLoad extends Thread {
             );
             objOutStream.writeObject(players);
             objOutStream.writeObject(currentGrid);
-            objOutStream.writeObject(currentGrid.getWidth());
-            objOutStream.writeObject(currentGrid.getHeight());
             objOutStream.writeObject(bomb);
             objOutStream.writeObject(blank);
             objOutStream.writeObject(flag);
             objOutStream.writeObject(shields);
             objOutStream.writeObject(gameMode);
+            objOutStream.writeObject(mEvents);
             objOutStream.writeObject(settingsChanged);
             objOutStream.writeObject(tList);
-            if(gameMode == GameMode.CAN_BE_REPLAYED)
+            if(gameMode == GameMode.CAN_BE_LOADED)
             objOutStream.writeObject(playerMoves);
             objOutStream.close();
         } catch (IOException e) {
@@ -126,17 +133,14 @@ public class SaveAndLoad extends Thread {
             ObjectInputStream objInputStream = new ObjectInputStream(new FileInputStream(saveFile));
             players = (ArrayList<Player>) objInputStream.readObject();
             grid = (Grid) objInputStream.readObject();
-            grid.setWidth((int)objInputStream.readObject());
-            grid.setHeight((int)objInputStream.readObject());
             for (int i = 0; i < 4; i++)
                 allsettingNumber[i] = (int) objInputStream.readObject();
             gameMode = (GameMode) objInputStream.readObject();
+            mouseEvents = (ArrayList<MouseEvent>) objInputStream.readObject();
             isSettingsActivated = (boolean)objInputStream.readObject();
             timeList = (ArrayList<Integer>)objInputStream.readObject();
             if (gameMode == GameMode.CAN_BE_REPLAYED)
                 playerMoves = (ArrayList<playerMove>) objInputStream.readObject();
-            System.out.println(players.get(0).name+"Hello");
-            objInputStream.close();
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
@@ -147,11 +151,10 @@ public class SaveAndLoad extends Thread {
         try {
             FileInputStream fIn = new FileInputStream(file);
             ObjectInputStream objInputStream = new ObjectInputStream(fIn);
-            players = (ArrayList<Player>) objInputStream.readObject();
-
-            playersNames.add(players.get(0).getName());
-            if (players.size() == 2)
-                playersNames.add(players.get(1).getName());
+            numP = (int) objInputStream.readObject();
+            playersNames.add(((Player) objInputStream.readObject()).getName());
+            if (numP == 2)
+                playersNames.add(((Player) objInputStream.readObject()).getName());
             objInputStream.close();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

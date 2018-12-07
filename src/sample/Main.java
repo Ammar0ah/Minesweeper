@@ -104,8 +104,7 @@ public class Main extends Application {
         ScoreBoardButton.setId("openingButtons");
         ScoreBoardButton.setAlignment(Pos.CENTER);
         ScoreBoardButton.setOnAction(e ->{
-           window.setScene(sb.GUIScoreBord());
-           window.setTitle("Score Bord");
+           sb.GUIScoreBord();
         });
 
         JFXButton QuickGameButton = new JFXButton("Quick Load Game");
