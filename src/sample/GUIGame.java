@@ -512,7 +512,6 @@ public class GUIGame extends NormalGame {
     }
 
     public boolean OnClick(javafx.scene.input.MouseEvent mouseEvent, Square square, Label playerTurnLabel) {
-        playerM = new playerMove();
         playerM.setSquare(square);
         timer.Reset();
 
@@ -587,11 +586,44 @@ public class GUIGame extends NormalGame {
             }
 
         }
+
+
         playerMoves.add(playerM);
         ip = (ip + 1) % players.size();
-
         if (players.size() > 1 && players.get(1).isAuto())
             autoMove();
+        if (playerM.getPlayer().getResult() == Result.winner) {
+            for (playerMove pm : playerMoves) {
+                System.out.println("The moves list");
+                System.out.println(pm.getSquare().getI() + " " + pm.getSquare().getJ());
+            }
+            try {
+                if (players.get(1).getScore().latestScore() > players.get(0).getScore().latestScore()) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("WINNER !");
+                    alert.setContentText(players.get(1).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(1).getScore().latestScore()));
+                    alert.showAndWait();
+
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("WINNER !");
+                    alert.setContentText(players.get(0).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(0).getScore().latestScore()));
+                    alert.showAndWait();
+
+                }
+
+            } catch (IndexOutOfBoundsException e) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("WINNER !");
+                alert.setContentText(players.get(0).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(0).getScore().latestScore()));
+                alert.showAndWait();
+            }
+            saveData();
+            updateScoreBoard();
+            endGame();
+
+        }
+
 
         return true;
     }
@@ -633,37 +665,6 @@ public class GUIGame extends NormalGame {
             player.setResult(Result.winner);
             //score.updateScore(grid.getNumberofMines() * 100);
             endGame();
-        }
-        if (playerM.getPlayer().getResult() == Result.winner) {
-            for (playerMove pm : playerMoves) {
-                System.out.println("The moves list");
-                System.out.println(pm.getSquare().getI() + " " + pm.getSquare().getJ());
-            }
-            try {
-                if (players.get(1).getScore().latestScore() > players.get(0).getScore().latestScore()) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("WINNER !");
-                    alert.setContentText(players.get(1).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(1).getScore().latestScore()));
-                    alert.showAndWait();
-
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("WINNER !");
-                    alert.setContentText(players.get(0).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(0).getScore().latestScore()));
-                    alert.showAndWait();
-
-                }
-
-            } catch (IndexOutOfBoundsException e) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("WINNER !");
-                alert.setContentText(players.get(0).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(0).getScore().latestScore()));
-                alert.showAndWait();
-            }
-            saveData();
-            updateScoreBoard();
-            endGame();
-
         }
 
     }
