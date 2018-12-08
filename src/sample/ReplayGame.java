@@ -31,8 +31,8 @@ public class ReplayGame {
         guiGame.gridPane = new GridPane();
         guiGame.gridPane.setAlignment(Pos.CENTER);
         guiGame.gridPane.setStyle("-fx-border-style: solid ; -fx-border-width: 2px ;");
-        window.setWidth(750);
-        window.setHeight(750);
+        window.setWidth(850);
+        window.setHeight(850);
         for (int i = 0; i < guiGame.grid.getHeight(); i++) {
             for (int j = 0; j < guiGame.grid.getWidth(); j++) {
                 guiGame.grid.getGameGround()[i][j].setState(squareState.STATE_CLOSED);

@@ -132,11 +132,19 @@ public class chooseLoadedGame {
                 replayGameButton[i].setId("loadListButton");
                 HBox.setMargin(replayGameButton[i], new Insets(10, 0, 10, 70));
                 if (saveAndLoad.get_dataInfo().getGameMode() != GameMode.CAN_BE_REPLAYED) {
-                    Button btn = replayGameButton[i];
-                    btn.setOnMouseEntered(t -> {
-                        Tooltip tooltip = new Tooltip("this Game isn't complete and can't be replayed");
-                        btn.setTooltip(tooltip);
+                    JFXButton btn = replayGameButton[i];
+                    btn.setOnMouseEntered(new EventHandler<MouseEvent>
+                            () {
+
+                        @Override
+                        public void handle(MouseEvent t) {
+                            Tooltip tooltip = new Tooltip("this Game isn't complete and can't be replayed");
+                            btn.setTooltip(tooltip);
+                            btn.setText("no replay file");
+                        }
+
                     });
+                    ;
                 } else {
                     replayGameButton[i].setOnAction(e -> {
                         ReplayGame replayGame = new ReplayGame();
