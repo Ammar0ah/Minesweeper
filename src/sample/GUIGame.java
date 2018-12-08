@@ -623,6 +623,7 @@ public class GUIGame extends NormalGame {
             endGame();
 
         }
+        playerM=new playerMove();
 
 
         return true;
