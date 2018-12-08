@@ -1,0 +1,240 @@
+/** {*/
+    /*-fx-primary: #0ea091;*/
+    /*-fx-secondary: #1f5a87;*/
+    /*-fx-third: #304461*/
+/*}*/
+/*.root{*/
+    /*-fx-font-size: 14pt;*/
+    /*-fx-font-family: "Broadway, sans-serif";*/
+    /*-fx-base: -fx-secondary;*/
+    /*-fx-focus-color: -fx-primary;*/
+/*}*/
+
+/*.button{*/
+    /*!*-fx-text-fill: #006464;*!*/
+    /*-fx-background-color: -fx-third;*/
+    /*-fx-border-radius: 50px ;*/
+    /*-fx-padding: 5;*/
+    /*-fx-focus-color: -fx-primary;*/
+/*}*/
+
+/*#startGameButton {*/
+    /*-fx-padding: 50px;*/
+    /*-fx-border-insets: 5px;*/
+    /*-fx-background-insets: 30px;*/
+/*}*/
+
+/*#gameIntroLabel {*/
+    /*-fx-text-fill: #fff;*/
+    /*-fx-font-size: 30px;*/
+    /*-fx-padding: 50px;*/
+    /*-fx-border-insets: 5px;*/
+    /*-fx-wrap-text: true;*/
+    /*-fx-text-alignment: center;*/
+
+/*}*/
+
+/*#playerNameField {*/
+    /*-fx-max-width: 450;*/
+/*}*/
+
+/*#gridWidthField {*/
+    /*-fx-max-width: 300;*/
+/*}*/
+
+/*#gridHeightField {*/
+    /*-fx-max-width: 300;*/
+/*}*/
+
+/*#bombNumField {*/
+    /*-fx-max-width: 300;*/
+/*}*/
+
+
+/*#gridButton {*/
+    /*!*-webkit-fx-border: 1px solid blue;*!*/
+    /*!*-moz-fx-border: 1px solid blue;*!*/
+    /*!*-ms-fx-border: 1px solid blue;*!*/
+    /*!*-o-fx-border: 1px solid blue;*!*/
+    /*!*-khtml-fx-border: 1px solid blue;*!*/
+    /*-fx-border: 0.5px 0.5px 0.5px 0.5px;*/
+    /*-fx-border-color: #dbffcb;*/
+    /*-fx-border-style: solid;*/
+    /*-fx-border-radius: 0px;*/
+    /*-fx-padding: 0;*/
+    /*-fx-max-width: 10;*/
+    /*-fx-max-height: 10;*/
+    /*!*-fx-font-size: 5;*!*/
+
+/*}*/
+
+/*#settingsField {*/
+    /*-fx-max-width: 300;*/
+/*}*/
+/*!*.slider{*!*/
+    /*!*-fx-border-color: white;*!*/
+    /*!*-fx-border-style: dashed;*!*/
+    /*!*-fx-border-width: 2;*!*/
+/*!*}*!*/
+
+
+/*////////////////*/
+
+@font-face {
+    /*font-family : 'HACKED' ;*/
+    /*src: url('./HACKED.ttf');*/
+}
+
+* {
+    -fx-primary: #5e0032;
+    /*1b5e20*/
+    -fx-secondary: #eeeeee;
+    -fx-third: #aeaeae
+}
+.root{
+    -fx-font-size: 20pt;
+    -fx-font-family: "Broadway, sans-serif";
+    -fx-background-color: -fx-secondary;
+    -fx-base: -fx-secondary;
+    /*-fx-focus-color: -fx-primary;*/
+}
+
+/*#openingList {*/
+/*-fx-max-width: 600;*/
+/*-fx-max-height: 100%;*/
+/*}*/
+
+.button-raised{
+    -fx-padding: 0.7em 0.57em;
+    -fx-font-size: 14px;
+    -jfx-button-type: RAISED;
+    -fx-background-color: -fx-primary;
+    -fx-pref-width: 200;
+    -fx-text-fill: WHITE;
+}
+
+#openingButtons{
+    -fx-min-width:300;
+    -fx-min-height:50;
+}
+
+.newGameLabels {
+    -fx-text-fill: -fx-primary;
+    -fx-font-family: "Lucida Sans   ";
+}
+#nameGame {
+    -fx-font-size: 60px;
+}
+#nameGameMat {
+    -fx-font-size: 25px;
+}
+
+.mapImage {
+    -fx-max-width: 100;
+    -fx-max-height: 100;
+}
+
+#allSettingsBlock {
+    -fx-max-width: 600;
+}
+
+#settingsWord {
+    -fx-font-size: 50px;
+}
+
+.defaultLabel{
+    -fx-text-fill: -fx-primary;
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 17px;
+}
+
+.settingsLabel {
+    -fx-text-fill: -fx-primary;
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 25px;
+}
+
+.settingsTextField {
+    -jfx-unfocus-color : #525252;
+    -jfx-focus-color :  -fx-primary ;
+    -fx-font-size: 15px;
+}
+
+#toggleButton {
+    -jfx-toggle-color : -fx-primary;
+}
+
+
+/*.button{*/
+/*!*-fx-text-fill: #006464;*!*/
+/*-fx-background-color: -fx-third;*/
+/*-fx-border-radius: 50px ;*/
+/*-fx-padding: 5;*/
+/*-fx-focus-color: -fx-primary;*/
+/*}*/
+
+/*#startGameButton {*/
+/*-fx-padding: 50px;*/
+/*-fx-border-insets: 5px;*/
+/*-fx-background-insets: 30px;*/
+/*}*/
+
+/*#gameIntroLabel {*/
+/*-fx-text-fill: #fff;*/
+/*-fx-font-size: 30px;*/
+/*-fx-padding: 50px;*/
+/*-fx-border-insets: 5px;*/
+/*-fx-wrap-text: true;*/
+/*-fx-text-alignment: center;*/
+
+/*}*/
+
+/*#playerNameField {*/
+/*-fx-max-width: 450;*/
+/*}*/
+
+/*#gridWidthField {*/
+/*-fx-max-width: 300;*/
+/*}*/
+
+/*#gridHeightField {*/
+/*-fx-max-width: 300;*/
+/*}*/
+
+/*#bombNumField {*/
+/*-fx-max-width: 300;*/
+/*}*/
+
+
+#gridButton {
+    /*-webkit-fx-border: 1px solid blue;*/
+    /*-moz-fx-border: 1px solid blue;*/
+    /*-ms-fx-border: 1px solid blue;*/
+    /*-o-fx-border: 1px solid blue;*/
+    /*-khtml-fx-border: 1px solid blue;*/
+    -fx-border: 0.5px 0.5px 0.5px 0.5px;
+    -fx-border-color: -fx-primary;
+    -fx-background-color: -fx-third ;
+    -fx-border-style: solid;
+    -fx-border-radius: 0px;
+    -fx-padding: 0;
+    -fx-max-width: 10;
+    -fx-max-height: 10;
+    /*-fx-font-size: 5;*/
+
+}
+
+.gameText {
+    -fx-text-fill: -fx-primary;
+    -fx-font-family: "Lucida Sans";
+    -fx-font-size: 25px;
+}
+
+/*#settingsField {*/
+/*-fx-max-width: 300;*/
+/*}*/
+/*.slider{*/
+/*-fx-border-color: white;*/
+/*-fx-border-style: dashed;*/
+/*-fx-border-width: 2;*/
+/*}*/
