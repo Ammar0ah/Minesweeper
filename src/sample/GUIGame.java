@@ -61,8 +61,6 @@ public class GUIGame extends NormalGame {
     );
     Label cordX = new Label();
     Label cordY = new Label();
-    Label res = new Label();
-    Label winner = new Label();
     Label shieldLabelLeft = new Label();
     Label shieldLabelRight;
     Label currPlayerLabel = new Label();
@@ -236,7 +234,7 @@ public class GUIGame extends NormalGame {
             Square cell = grid.getGameGround()[i][j];
             Button button = getButtonByRowAndColumn(i, j, gridPane);
 
-            if (cell.isClicked())
+            if (cell.isClicked() && gameMode == GameMode.CAN_BE_LOADED)
                 return numOfentries;
 
             if (findMines(cell) == 0) {
@@ -473,7 +471,9 @@ public class GUIGame extends NormalGame {
         saveGameButton.setOnAction(e -> {
             dataInfo.setGameMode(gameMode);
             dataInfo.setPlayerMoves(playerMoves);
-            saveOrLoad.saveGameStateBinary(dataInfo);
+            saveOrLoad.set_dataInfo(dataInfo);
+            dataInfo.setChoice(Choice.SAVE);
+            saveOrLoad.start();
 
         });
         HBox topItems = new HBox();
@@ -500,6 +500,7 @@ public class GUIGame extends NormalGame {
 
     public boolean OnClick(javafx.scene.input.MouseEvent mouseEvent, Square square, Label playerTurnLabel) {
         timer.Reset();
+        playerM=new playerMove();
 
         if (players.size() > 1 && players.get(1).isAuto())
             ip = 0;
@@ -520,11 +521,11 @@ public class GUIGame extends NormalGame {
                 playerTurnLabel.setText(players.get(turn).getName());
 
             }
-            playerM.setPlayer(player);
         }
         playerM.setSquare(square);
-        playerMove pm = playerM;
-        playerMoves.add(pm);
+        playerM.setPlayer(player);
+
+
         System.out.println(playerM.getSquare().getI() + " " + playerM.getSquare().getJ());
         if (mouseEvent.getButton() == MouseButton.PRIMARY) {
             playerM.setMoveType(moveType.Reveal);
@@ -568,6 +569,7 @@ public class GUIGame extends NormalGame {
                     players.remove(playerM.getPlayer());
                     alert.showAndWait();
                     timer.interrupt();
+                    saveData();
                 }
                 return false;
             }
@@ -577,6 +579,7 @@ public class GUIGame extends NormalGame {
 
         if (players.size() > 1 && players.get(1).isAuto())
             autoMove();
+        playerMoves.add(playerM);
 
         return true;
     }
@@ -626,12 +629,14 @@ public class GUIGame extends NormalGame {
 
         if (grid.numberofFlags == grid.getNumberofMines() || (calculateBlankCells() + grid.getNumberofMines() == grid.getWidth() * grid.getHeight())) {
             player.setResult(Result.winner);
-            //score.updateScore(grid.getNumberofMines() * 100);
+            score.updateScore(grid.getNumberofMines() * 100);
             endGame();
         }
         if (playerM.getPlayer().getResult() == Result.winner) {
+            System.out.println("The moves list");
+            if(!playerMoves.contains(playerM))
+                playerMoves.add(playerM);
             for (playerMove pm : playerMoves) {
-                System.out.println("The moves list");
                 System.out.println(pm.getSquare().getI() + " " + pm.getSquare().getJ());
             }
             gameMode = GameMode.CAN_BE_REPLAYED;
@@ -658,6 +663,7 @@ public class GUIGame extends NormalGame {
                 alert.setContentText(players.get(0).getName() + " " + "You Won the game. You're score is:  " + String.valueOf(players.get(0).getScore().latestScore()));
                 alert.showAndWait();
             }
+            saveData();
             updateScoreBoard();
             endGame();
 
@@ -721,6 +727,17 @@ public class GUIGame extends NormalGame {
         scoreBoards.add(sb);
         sb.write(scoreBoards);
     }
+
+    private void saveData(){
+
+        dataInfo.setPlayerMoves(playerMoves);
+        dataInfo.setGameMode(GameMode.CAN_BE_REPLAYED);
+        dataInfo.setChoice(Choice.SAVE);
+        saveOrLoad.set_dataInfo(dataInfo);
+        saveOrLoad.saveGameStateBinary();
+        timer.interrupt();
+    }
+
 
 
 }

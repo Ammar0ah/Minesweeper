@@ -33,16 +33,26 @@ public class SaveAndLoad extends Thread {
     public void setSaveFile(String saveFile) {
         this.saveFile = new File(saveFile);
     }
+    public void SaveAndLoad(){
+        saveFile = new File("./src/data/SavedGames/SavedData" + (saveNumber) + ".ran");
+    }
 
+    @Override
+    public void run(){
+        if(_dataInfo.getChoice() == Choice.SAVE)
+            saveGameStateBinary();
+        else
+            loadGameStateBinary();
+    }
 
-    public void saveGameStateBinary(DataInfo dataInfo) {
+    public void saveGameStateBinary() {
 
         try {
             saveFile = new File("./src/data/SavedGames/SavedData" + (saveNumber) + ".ran");
             ObjectOutputStream objOutStream = new ObjectOutputStream(
                     new FileOutputStream(saveFile)
             );
-            objOutStream.writeObject(dataInfo);
+            objOutStream.writeObject(_dataInfo);
             objOutStream.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -68,6 +78,7 @@ public class SaveAndLoad extends Thread {
             _dataInfo = (DataInfo)objInputStream.readObject();
 
             objInputStream.close();
+            fIn.close();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("File has been read successfully");
         }

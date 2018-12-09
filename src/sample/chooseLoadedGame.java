@@ -94,9 +94,7 @@ public class chooseLoadedGame {
                     replayGameButton[i].setOnAction(e -> {
                         ReplayGame replayGame = new ReplayGame();
                         replayGame.saveAndLoad.setSaveFile("./src/data/SavedGames/" + file.getName());
-                        Stage window = replayGame.init();
-                        window.show();
-                        replayGame.loadMoves();
+                        replayGame.start();
                     });
                 }
                 loadFileBoxes[i] = new HBox();

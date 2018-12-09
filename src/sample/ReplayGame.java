@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,13 +11,21 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class ReplayGame {
+public class ReplayGame extends Thread {
     public SaveAndLoad saveAndLoad = new SaveAndLoad();
     GUIGame guiGame = new GUIGame();
     Stage window = new Stage();
     BorderPane borderPane = new BorderPane();
     DataInfo dataInfo;
 
+    @Override
+    public void run(){
+        Platform.runLater(() ->{
+            init();
+            loadMoves();
+        });
+
+    }
     private void loadInfos() {
         saveAndLoad.loadGameStateBinary();
         int[] settings = saveAndLoad.get_dataInfo().getAllsettingNumber();
@@ -25,7 +34,7 @@ public class ReplayGame {
                 dataInfo.isSettingsActivated());
     }
 
-    public Stage init() {
+    public void init() {
         loadInfos();
         guiGame.grid = dataInfo.getGrid();
         guiGame.gridPane = new GridPane();
@@ -37,7 +46,7 @@ public class ReplayGame {
             for (int j = 0; j < guiGame.grid.getWidth(); j++) {
                 guiGame.grid.getGameGround()[i][j].setState(squareState.STATE_CLOSED);
                 Button gridButton = new Button("");
-                gridButton.setId("gridButton");
+             //   gridButton.setId("gridButton");
                 gridButton.setPrefSize(window.getWidth() / guiGame.grid.getWidth(),
                         window.getHeight() / guiGame.grid.getHeight());
                 gridButton.setMinHeight(30);
@@ -52,19 +61,21 @@ public class ReplayGame {
 
         borderPane.setCenter(guiGame.gridPane);
         window.setScene(new Scene(borderPane));
+        window.show();
 
-        return window;
     }
 
     public void loadMoves() {
         for (int i = 0; i < dataInfo.getPlayerMoves().size(); i++) {
-            try {
-                Thread.sleep(1000);
+           // try {
+              //  Thread.sleep(1000);
+       //     for (int j = 0 ; j < 1000000000; j++ ){}
                 playerMove pMove = dataInfo.getPlayerMoves().get(i);
+
                 guiGame.acceptMove(pMove, dataInfo.getPlayers());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            //} catch (InterruptedException e) {
+              //  e.printStackTrace();
+            //}
 
         }
     }
