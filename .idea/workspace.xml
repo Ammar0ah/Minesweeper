@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e91b5071-5e54-4050-9a8f-f59528743df8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/data/ScoreBorde.ran" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/data/ScoreBorde.ran" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/data/gameID.ran" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/data/gameID.ran" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/DataInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/sample/DataInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/GUIGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/sample/GUIGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/PlayerTimer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/sample/PlayerTimer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/ReplayGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/sample/ReplayGame.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Table Pane/sample/SaveAndLoad.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Table Pane/sample/SaveAndLoad.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/ScoreBorde.ran" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/ScoreBorde.ran" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/gameID.ran" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/gameID.ran" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/DataInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/DataInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/GUIGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/GUIGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/PlayerTimer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/PlayerTimer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/ReplayGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/ReplayGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/SaveAndLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/SaveAndLoad.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/chooseLoadedGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/chooseLoadedGame.java" afterDir="false" />
-    </list>
+    <list default="true" id="e91b5071-5e54-4050-9a8f-f59528743df8" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -344,11 +327,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="java" value="3785" />
+          <entry key="txt" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JAVA" value="3785" />
+          <entry key="PLAIN_TEXT" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -418,8 +403,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/sample/startNewGameSettings.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="223" column="28" lean-forward="true" selection-start-line="223" selection-start-column="28" selection-end-line="223" selection-end-column="28" />
+            <state relative-caret-position="47">
+              <caret line="219" column="6" lean-forward="true" selection-start-line="219" selection-start-column="6" selection-end-line="219" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -790,7 +775,7 @@
       <workItem from="1544272494988" duration="4313000" />
       <workItem from="1544285072282" duration="415000" />
       <workItem from="1544346524681" duration="4641000" />
-      <workItem from="1544384520179" duration="4923000" />
+      <workItem from="1544384520179" duration="5181000" />
     </task>
     <task id="LOCAL-00001" summary="need score update">
       <created>1542830482890</created>
@@ -834,11 +819,25 @@
       <option name="project" value="LOCAL" />
       <updated>1543785302365</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="nothing new">
+      <created>1544389957073</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1544389957073</updated>
+    </task>
+    <task id="LOCAL-00008" summary="nothing new">
+      <created>1544390124541</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1544390124541</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="187497000" />
+    <option name="totallyTimeSpent" value="187755000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -851,7 +850,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4964706" visible="true" weight="0.2671141" />
       <window_info id="Structure" order="1" sideWeight="0.5011442" side_tool="true" weight="0.17315437" />
@@ -868,7 +866,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
       <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4986577" weight="0.49008498" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5013423" side_tool="true" weight="0.28186968" />
+      <window_info active="true" anchor="bottom" id="Event Log" order="8" sideWeight="0.5013423" side_tool="true" visible="true" weight="0.28186968" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3286119" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.33994335" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
@@ -927,7 +925,9 @@
     <MESSAGE value="Part two accomplished" />
     <MESSAGE value="Part two accomplished with auto player" />
     <MESSAGE value="Save Only Func with Auto Player" />
-    <option name="LAST_COMMIT_MESSAGE" value="Save Only Func with Auto Player" />
+    <MESSAGE value="nothing new" />
+    <MESSAGE value="fuck riad" />
+    <option name="LAST_COMMIT_MESSAGE" value="fuck riad" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1265,8 +1265,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/startNewGameSettings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
-          <caret line="223" column="28" lean-forward="true" selection-start-line="223" selection-start-column="28" selection-end-line="223" selection-end-column="28" />
+        <state relative-caret-position="47">
+          <caret line="219" column="6" lean-forward="true" selection-start-line="219" selection-start-column="6" selection-end-line="219" selection-end-column="6" />
         </state>
       </provider>
     </entry>
