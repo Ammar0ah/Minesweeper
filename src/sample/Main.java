@@ -94,9 +94,7 @@ public class Main extends Application {
         oldgamesButton.setId("openingButtons");
         oldgamesButton.setAlignment(Pos.CENTER);
         oldgamesButton.setOnAction(e ->{
-            //TODO : set new window for loading the game to choose a file
-            //TODO:  set the file info in the GUIGame
-            load.openLoadList();
+            load.openLoadList(themeSelector);
         });
 
         JFXButton ScoreBoardButton = new JFXButton("Score Board");
@@ -104,7 +102,7 @@ public class Main extends Application {
         ScoreBoardButton.setId("openingButtons");
         ScoreBoardButton.setAlignment(Pos.CENTER);
         ScoreBoardButton.setOnAction(e ->{
-           sb.GUIScoreBord();
+           sb.GUIScoreBord(themeSelector);
         });
 
         JFXButton QuickGameButton = new JFXButton("Quick Load Game");
@@ -112,7 +110,8 @@ public class Main extends Application {
         QuickGameButton.setId("openingButtons");
         QuickGameButton.setAlignment(Pos.CENTER);
         QuickGameButton.setOnAction(e ->{
-            window.setScene(guiGame.returnScene(guiGame.grid.getHeight(),guiGame.grid.getWidth(),"ammar","nader",1100,700,false,settings.shieldsCount,true));
+            window.setScene(guiGame.returnScene(guiGame.grid.getHeight(),guiGame.grid.getWidth(),"ammar","nader",
+                    1100,700,false, settingsGUI.shieldsCount));
         });
         JFXButton settingsButton = new JFXButton("Settings");
         settingsButton.getStyleClass().add("button-raised");

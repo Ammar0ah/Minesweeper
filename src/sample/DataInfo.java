@@ -9,7 +9,7 @@ public class DataInfo implements Serializable {
     private Choice choice;
     private Grid grid;
     private boolean isSettingsActivated;
-    private GameMode gameMode;
+    private GameMode gameMode =GameMode.CAN_BE_LOADED;
     private ArrayList<playerMove> playerMoves = new ArrayList<>();
     private int[] allsettingNumber = new int[4];
     private ArrayList<Player> players = new ArrayList<>();
@@ -94,6 +94,18 @@ public class DataInfo implements Serializable {
         for (Player p:_players) {
             players.add(p);
         }
+    }
+
+    public DataInfo(Grid grid,ArrayList<Player> _players,ArrayList<playerMove> playerMoves, int bomb ,int blank , int flag ,int shields,boolean isSettingsActivated) {
+        gameMode=GameMode.CAN_BE_REPLAYED;
+        this.grid = grid;
+        this.allsettingNumber[0] = bomb ;
+        this.allsettingNumber[1] = blank;
+        this.allsettingNumber[2] = flag;
+        this.allsettingNumber[3] = shields;
+        this.isSettingsActivated = isSettingsActivated;
+        this.players = _players;
+        this.playerMoves = playerMoves;
     }
 
 }

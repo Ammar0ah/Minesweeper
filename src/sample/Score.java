@@ -56,7 +56,5 @@ public class Score implements Serializable {
         playerShieldScore += 50*(p.getShield().getShieldCount());
 
     }
-    public int latestScore(){
-        return playerscore + playerFlagsScore + playerShieldScore;
-    }
+
 }

@@ -1,5 +1,8 @@
 package sample;
 
+import com.jfoenix.controls.JFXButton;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -14,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.SimpleFormatter;
 
-public class ScoreBoard implements Serializable {
+public class ScoreBoard  implements Serializable {
     private int ID=1;
     private Date startDate = new Date();
     private Date endDate = new Date();
@@ -26,6 +29,9 @@ public class ScoreBoard implements Serializable {
     private  String filepath="./src/data/ScoreBorde.ran";
     private  String Gamefilepath= "./src/data/SavedGame/SavedData1";
     private boolean canBeReplayed=false;
+    String themeLight ;
+    String themeDark ;
+    String themepath;
 
     public boolean isCanBeReplayed() { return canBeReplayed; }
 
@@ -158,68 +164,150 @@ public class ScoreBoard implements Serializable {
     }
 
 
-    public void GUIScoreBord(){
-        Stage stage =  new Stage();
-        ArrayList<ScoreBoard> sbs = new ArrayList<>();
-        sbs = this.read();
-        ScoreBoard sb = new ScoreBoard();
 
-        String themeLight ;
-        String themeDark ;
+        public void GUIScoreBord(boolean themeSelector){
+            if (themeSelector) {
+                themepath = "./DarkStyle.css";
+            } else if (!themeSelector)
+                themepath = "./style.css";
+            themeLight = getClass().getResource("../style.css").toExternalForm();
+            themeDark = getClass().getResource("../DarkStyle.css").toExternalForm();
+            Stage stage =  new Stage();
+            VBox mainScoreBoard = new VBox();
+            mainScoreBoard.getStylesheets().add(themepath);
+            mainScoreBoard.setAlignment(Pos.CENTER);
+//            mainScoreBoard.setStyle("-fx-border-style: solid; -fx-border-color: red ; -fx-border-width: 2px;");
+//        mainScoreBoard.setFillWidth(true);
+            Label scoreBoardWord = new Label("Score Board !");
+            scoreBoardWord.setAlignment(Pos.CENTER);
+            scoreBoardWord.getStyleClass().add("defaultLabel");
+            scoreBoardWord.setId("scoreBoardWord");
+            HBox scoreBoardFields = new HBox();
+            scoreBoardFields.setAlignment(Pos.CENTER);
+            VBox.setMargin(scoreBoardFields, new Insets(0 , 150, 0 ,0));
+            scoreBoardFields.getStylesheets().add(themepath);
+            Label idField = new Label("ID");
+            HBox.setMargin(idField, new Insets(20 , 0 ,10,0));
+            idField.getStyleClass().add("defaultLabel");
+            Label firstPlayerField = new Label("First Player");
+            firstPlayerField.getStyleClass().add("defaultLabel");
+            HBox.setMargin(firstPlayerField, new Insets( 20, 0 ,0,50));
+            Label firstPlayerScoreField = new Label("Score");
+            firstPlayerScoreField.getStyleClass().add("defaultLabel");
+            HBox.setMargin(firstPlayerScoreField, new Insets( 20, 0 ,0,70));
+            Label secondPlayerField = new Label("Second Player");
+            secondPlayerField.getStyleClass().add("defaultLabel");
+            HBox.setMargin(secondPlayerField, new Insets( 20, 0 ,0,50));
+            Label secondPlayerScoreField = new Label("Score");
+            secondPlayerScoreField.getStyleClass().add("defaultLabel");
+            HBox.setMargin(secondPlayerScoreField, new Insets( 20, 0 ,0,40));
+            Label startDateField = new Label("Start Date");
+            startDateField.getStyleClass().add("defaultLabel");
+            HBox.setMargin(startDateField, new Insets( 20, 0 ,0,100));
+            Label endDateField = new Label("End Date");
+            endDateField.getStyleClass().add("defaultLabel");
+            HBox.setMargin(endDateField, new Insets( 20, 0 ,0,150));
 
-        themeLight = getClass().getResource("../style.css").toExternalForm();
-        themeDark = getClass().getResource("../DarkStyle.css").toExternalForm();
+            scoreBoardFields.getChildren().addAll(idField, firstPlayerField, firstPlayerScoreField, secondPlayerField, secondPlayerScoreField, startDateField, endDateField);
+            mainScoreBoard.getChildren().addAll(scoreBoardWord, scoreBoardFields);
+            ScrollPane scoreBoardScrollable = new ScrollPane();
+            JFXButton sortByIdButton = new JFXButton("Sort By ID");
+            JFXButton sortBystartDateButton = new JFXButton("Sort By Start Date");
+            JFXButton sortByEndDateButton = new JFXButton("Sort By End Date");
 
-        VBox mainLoadList = new VBox();
-        HBox bordItem[] = new HBox[sbs.size()];
-        ScrollPane  mainScrollPane = new ScrollPane();
 
-        Label Idlabel[] = new Label[sbs.size()];
-        Label player1label[] = new Label[sbs.size()];
-        Label player2label[] = new Label[sbs.size()];
-        Label score1label[] = new Label[sbs.size()];
-        Label score2label[] = new Label[sbs.size()];
-        Label startTimelabel[]= new Label[sbs.size()];
-        Label endTimelabel[]= new Label[sbs.size()];
-        for(int i=0;i<sbs.size();i++){
-            sb = sbs.get(i);
-            Idlabel[i] = new Label();
-            player1label[i]= new Label();
-            player2label[i]=new Label();
-            score1label[i] = new Label();
-            score2label[i] = new Label();
-            startTimelabel[i]= new Label();
-            endTimelabel[i]= new Label();
-            bordItem[i] =new HBox();
-            Idlabel[i].setText(""+sb.getID());
-            player1label[i].setText(sb.getP1Name());
-            player2label[i].setText(sb.getP2Name());
-            score1label[i].setText(""+sb.getPlayer1Score().getLatestScore());
-            score2label[i].setText(""+sb.getPlayer2Score().getLatestScore());
-            startTimelabel[i].setText(""+sb.getStartDate());
-            endTimelabel[i].setText(""+sb.getEndDate());
-            bordItem[i].getStylesheets().add(themeLight);
-            bordItem[i].getChildren().addAll(
-                    Idlabel[i],
-                    player2label[i],
-                    player1label[i],
-                    score1label[i],
-                    score2label[i],
-                    startTimelabel[i],
-                    endTimelabel[i]);
-            mainLoadList.getStylesheets().add(themeLight);
-            mainLoadList.getChildren().add(bordItem[i]);
+            ArrayList<ScoreBoard> sbs = new ArrayList<>();
+            sbs = this.read();
+            ScoreBoard sb = new ScoreBoard();
 
+
+            HBox bordItem[] = new HBox[sbs.size()];
+            ScrollPane  mainScrollPane = new ScrollPane();
+
+
+            Label Idlabel[] = new Label[sbs.size()];
+            Label player1label[] = new Label[sbs.size()];
+            Label player2label[] = new Label[sbs.size()];
+            Label score1label[] = new Label[sbs.size()];
+            Label score2label[] = new Label[sbs.size()];
+            Label startTimelabel[]= new Label[sbs.size()];
+            Label endTimelabel[]= new Label[sbs.size()];
+            JFXButton load[] = new JFXButton[sbs.size()] ;
+            for(int i=0;i<sbs.size();i++){
+                sb = sbs.get(i);
+                Idlabel[i] = new Label();
+                player1label[i]= new Label();
+                player2label[i]=new Label();
+                score1label[i] = new Label();
+                score2label[i] = new Label();
+                startTimelabel[i]= new Label();
+                endTimelabel[i]= new Label();
+                bordItem[i] =new HBox();
+                load[i] = new JFXButton("load");
+                Idlabel[i].getStyleClass().add("defaultLabel");
+                Idlabel[i].setPrefWidth(30);
+//                Idlabel[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
+                Idlabel[i].setText(""+sb.getID());
+                HBox.setMargin(Idlabel[i], new Insets( 30, 0 ,0,0));
+                player1label[i].setText(sb.getP1Name());
+//                player1label[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
+                player1label[i].setPrefWidth(110);
+                HBox.setMargin(player1label[i], new Insets( 30, 0 ,0,50));
+                player1label[i].getStyleClass().add("defaultLabel");
+                player2label[i].setText(sb.getP2Name());
+//                player2label[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
+                HBox.setMargin(player2label[i], new Insets( 30, 0 ,0,50));
+                player2label[i].setPrefWidth(110);
+                player2label[i].getStyleClass().add("defaultLabel");
+                score1label[i].setText(""+sb.getPlayer1Score().getLatestScore());
+                score1label[i].setPrefWidth(50);
+//                score1label[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
+                HBox.setMargin(score1label[i], new Insets( 30, 0 ,0,40));
+                score1label[i].getStyleClass().add("defaultLabel");
+                score2label[i].setText(""+sb.getPlayer2Score().getLatestScore());
+                score2label[i].setPrefWidth(50);
+//                score2label[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
+                HBox.setMargin(score2label[i], new Insets( 30, 0 ,0,40));
+                score2label[i].getStyleClass().add("defaultLabel");
+                startTimelabel[i].setText(""+sb.getStartDate());
+//                startTimelabel[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
+                HBox.setMargin(startTimelabel[i], new Insets( 30, 0 ,0,75));
+                startTimelabel[i].setPrefWidth(200);
+                startTimelabel[i].getStyleClass().add("defaultLabel");
+                endTimelabel[i].setText(""+sb.getEndDate());
+                endTimelabel[i].setPrefWidth(200);
+//                endTimelabel[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
+                HBox.setMargin(endTimelabel[i], new Insets( 30, 0 ,0,60));
+                endTimelabel[i].getStyleClass().add("defaultLabel");
+                HBox.setMargin(load[i], new Insets( 30, 0 ,0,0));
+                bordItem[i].getStylesheets().add(themepath);
+                bordItem[i].getChildren().addAll(
+                        Idlabel[i],
+                        player1label[i],
+                        score1label[i],
+                        player2label[i],
+                        score2label[i],
+                        startTimelabel[i],
+                        endTimelabel[i],
+                        load[i]);
+                bordItem[i].getStyleClass().add("scoreBoardBorderButtom");
+                mainScoreBoard.getStylesheets().add(themepath);
+                mainScoreBoard.getChildren().add(bordItem[i]);
+            }
+            mainScrollPane.setContent(mainScoreBoard);
+            HBox mHBox = new HBox();
+            mHBox.getChildren().add(mainScrollPane);
+            mHBox.getStylesheets().add(themepath);
+            mHBox.setAlignment(Pos.CENTER);
+            Scene scene = new Scene(mHBox);
+            stage.setScene(scene);
+            stage.setMaximized(true);
+            stage.setTitle("Score Bord");
+            stage.show();
         }
 
-
-        mainScrollPane.setContent(mainLoadList);
-        Scene scene = new Scene(mainScrollPane , 1100, 700);
-        stage.setScene(scene);
-        stage.setTitle("Score Bord");
-        stage.show();
-
-
-
     }
-}
+
+
+
+

@@ -8,12 +8,12 @@ enum squareState {STATE_FLAG, STATE_CLOSED, STATE_OPENED}
 public class Square implements Serializable {
     private squareState state;
 
-    private String mark;
-    private boolean clicked = false;
-    private boolean hasBomb = false;
-    private boolean hasShield = false;
-    private int i;
-    private int j;
+    protected String mark;
+    protected boolean clicked = false;
+    protected boolean hasBomb = false;
+    protected boolean hasShield = false;
+    protected int i;
+    protected int j;
 
     public boolean isHasShield() {
         return hasShield;

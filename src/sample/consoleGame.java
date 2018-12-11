@@ -139,7 +139,7 @@ public class consoleGame extends NormalGame {
                 break;
 
             }
-            System.out.println(player.getName() + "Result: " + player.getScore().latestScore());
+            System.out.println(player.getName() + "Result: " + player.getScore().getLatestScore());
 
         }
 
