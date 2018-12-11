@@ -4,11 +4,7 @@ package sample;
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
-<<<<<<< HEAD
-import javafx.collections.FXCollections;
-=======
 import javafx.application.Platform;
->>>>>>> 9493756339af90c309290e481d09b9ffe3e64531
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -25,6 +21,7 @@ import javafx.util.Duration;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
 
 enum GameMode {NEW_GAME, CAN_BE_LOADED, CAN_BE_REPLAYED}
 
@@ -54,7 +51,6 @@ public class GUIGame extends NormalGame {
     GameMode gameMode;
     private DataInfo dataInfo;
     /// lists ///
-    //ArrayList<ScoreBoard> scoreBoards = new ArrayList<>();
     ObservableList<ScoreBoard> scoreBoards = FXCollections.observableArrayList();
     ArrayList<Player> players = new ArrayList<>();
     ArrayList<playerMove> playerMoves = new ArrayList<>();
@@ -507,24 +503,12 @@ public class GUIGame extends NormalGame {
                 saveOrLoad.set_dataInfo(dataInfo);
                 saveOrLoad.saveGameStateBinary();
 
-<<<<<<< HEAD
-        JFXButton saveGameButton = new JFXButton("save");
-        saveGameButton.getStyleClass().add("button-raised");
-        saveGameButton.setOnAction(e -> {
-            dataInfo.setGameMode(gameMode);
-            dataInfo.setPlayerMoves(playerMoves);
-            saveOrLoad.saveGameStateBinary(dataInfo);
-        });
-        HBox topItems = new HBox();
-        topItems.getChildren().addAll(saveGameButton, timerView);
-=======
             });
             topItems.getChildren().addAll(saveGameButton, timerView);
 
         } else
             topItems.getChildren().addAll(timerView);
 
->>>>>>> 9493756339af90c309290e481d09b9ffe3e64531
 
         borderPane.setLeft(leftMenu);
         if (players.size() > 1) {
