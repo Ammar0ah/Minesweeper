@@ -1,0 +1,78 @@
+* {
+    -fx-primary: #0ea091;
+    -fx-secondary: #1f5a87;
+    -fx-third: #304461
+}
+.root{
+    -fx-font-size: 14pt;
+    -fx-font-family: "Broadway, sans-serif";
+    -fx-base: -fx-secondary;
+    -fx-focus-color: -fx-primary;
+}
+
+.button{
+    /*-fx-text-fill: #006464;*/
+    -fx-background-color: -fx-third;
+    -fx-border-radius: 50px ;
+    -fx-padding: 5;
+    -fx-focus-color: -fx-primary;
+}
+
+#startGameButton {
+    -fx-padding: 50px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 30px;
+}
+
+#gameIntroLabel {
+    -fx-text-fill: #fff;
+    -fx-font-size: 30px;
+    -fx-padding: 50px;
+    -fx-border-insets: 5px;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+
+}
+
+#playerNameField {
+    -fx-max-width: 450;
+}
+
+#gridWidthField {
+    -fx-max-width: 300;
+}
+
+#gridHeightField {
+    -fx-max-width: 300;
+}
+
+#bombNumField {
+    -fx-max-width: 300;
+}
+
+
+#gridButton {
+    /*-webkit-fx-border: 1px solid blue;*/
+    /*-moz-fx-border: 1px solid blue;*/
+    /*-ms-fx-border: 1px solid blue;*/
+    /*-o-fx-border: 1px solid blue;*/
+    /*-khtml-fx-border: 1px solid blue;*/
+    -fx-border: 0.5px 0.5px 0.5px 0.5px;
+    -fx-border-color: #dbffcb;
+    -fx-border-style: solid;
+    -fx-border-radius: 0px;
+    -fx-padding: 0;
+    -fx-max-width: 10;
+    -fx-max-height: 10;
+    /*-fx-font-size: 5;*/
+
+}
+
+#settingsField {
+    -fx-max-width: 300;
+}
+/*.slider{*/
+    /*-fx-border-color: white;*/
+    /*-fx-border-style: dashed;*/
+    /*-fx-border-width: 2;*/
+/*}*/
