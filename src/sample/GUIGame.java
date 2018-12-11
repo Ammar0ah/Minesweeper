@@ -4,6 +4,7 @@ package sample;
 import com.jfoenix.controls.JFXButton;
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -50,7 +51,8 @@ public class GUIGame extends NormalGame {
     GameMode gameMode;
     private DataInfo dataInfo;
     /// lists ///
-    ArrayList<ScoreBoard> scoreBoards = new ArrayList<>();
+    //ArrayList<ScoreBoard> scoreBoards = new ArrayList<>();
+    ObservableList<ScoreBoard> scoreBoards = FXCollections.observableArrayList();
     ArrayList<Player> players = new ArrayList<>();
     ArrayList<playerMove> playerMoves = new ArrayList<>();
     ArrayList<Integer> timeList = new ArrayList<>();
@@ -488,10 +490,6 @@ public class GUIGame extends NormalGame {
             dataInfo.setGameMode(gameMode);
             dataInfo.setPlayerMoves(playerMoves);
             saveOrLoad.saveGameStateBinary(dataInfo);
-<<<<<<< HEAD
-=======
-
->>>>>>> 90bd1f2908237da2087424ef02d6647f4d99b76e
         });
         HBox topItems = new HBox();
         topItems.getChildren().addAll(saveGameButton, timerView);
@@ -724,22 +722,28 @@ public class GUIGame extends NormalGame {
             sb.setEndDate();
             sb.setP1Name(players.get(0).getName());
             sb.setP2Name(players.get(1).getName());
-            sb.setPlayer1Score(players.get(0).getScore());
-            sb.setPlayer2Score(players.get(1).getScore());
+            sb.setPlayer1Score(players.get(0).getScore().getLatestScore());
+            sb.setPlayer2Score(players.get(1).getScore().getLatestScore());
 
         } else {
             sb.setEndDate();
             sb.setP1Name(players.get(0).getName());
-            sb.setPlayer1Score(players.get(0).getScore());
+            sb.setPlayer1Score(players.get(0).getScore().getLatestScore());
 
         }
         if (gameMode == GameMode.CAN_BE_REPLAYED) {
             sb.setCanBeReplayed(true);
             sb.setGamefilepath(saveOrLoad.getSaveNumber());
         }
-        scoreBoards = sb.read();
-        scoreBoards.add(sb);
-        sb.write(scoreBoards);
+        try {
+            scoreBoards = sb.read();
+            scoreBoards.add(sb);
+            sb.write(scoreBoards);
+        }catch (Exception e){
+            sb.write(scoreBoards);
+            updateScoreBoard();
+        }
+
     }
 
 

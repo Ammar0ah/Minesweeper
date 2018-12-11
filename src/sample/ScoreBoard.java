@@ -1,12 +1,13 @@
 package sample;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -15,53 +16,58 @@ import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.SimpleFormatter;
 
-public class ScoreBoard implements Serializable {
-    private int ID=1;
+public class ScoreBoard   implements Serializable  {
+    private int ID = 1;
     private Date startDate = new Date();
     private Date endDate = new Date();
-    private Score player1Score = new Score();
-    private Score player2Score = new Score();
-    private SimpleDateFormat ft = new SimpleDateFormat (" yyyy.Mm.dd 'at' HH:mm:ss");
+    private String startDateS ;
+    private String endDateS ;
+    private int player1Score ;
+    private int player2Score ;
+    private SimpleDateFormat ft = new SimpleDateFormat(" yyyy/mm/dd 'at' HH:mm:ss");
     private String p1Name;
     private String p2Name;
-    private  String filepath="./src/data/ScoreBorde.ran";
-    private  String Gamefilepath= "./src/data/SavedGame/SavedData1";
-    private boolean canBeReplayed=false;
-    String themeLight ;
-    String themeDark ;
-    String themepath;
+    private String filepath = "./src/data/ScoreBord.ran";
+    private String Gamefilepath = "./src/data/SavedGame/SavedData1";
+    private boolean canBeReplayed = false;
 
-    public boolean isCanBeReplayed() { return canBeReplayed; }
+    public boolean isCanBeReplayed() {
+        return canBeReplayed;
+    }
 
-    public void setCanBeReplayed(boolean canBeReplayed) { this.canBeReplayed = canBeReplayed; }
+    public void setCanBeReplayed(boolean canBeReplayed) {
+        this.canBeReplayed = canBeReplayed;
+    }
 
     public ScoreBoard() {
         setID();
+        setStartDate();
     }
 
-    public String getGamefile() { return Gamefilepath; }
+    public String getGamefile() {
+        return Gamefilepath;
+    }
 
     private void setID() {
         try {
-            ArrayList<ScoreBoard> sbs;
-            sbs=this.read();
-            ID = sbs.get(sbs.size()-1).getID();
+            ObservableList<ScoreBoard> sbs;
+            sbs = this.read();
+            ID = sbs.get(sbs.size() - 1).getID();
             ID++;
             this.write(sbs);
 
-        }catch (Exception e){ID=0;}
+        } catch (Exception e) {
+            ID = 0;
+        }
 
     }
 
-    public void setGamefilepath(int i){
-        Gamefilepath="./data/SavedGame/Game"+i+".ran";
+    public void setGamefilepath(int i) {
+        Gamefilepath = "./data/SavedGame/Game" + i + ".ran";
     }
-
-
-
-
 
 
     public Date getStartDate() {
@@ -71,6 +77,8 @@ public class ScoreBoard implements Serializable {
 
     public void setStartDate() {
         startDate = new Date();
+        startDateS = ft.format(startDate);
+
     }
 
     public Date getEndDate() {
@@ -79,22 +87,24 @@ public class ScoreBoard implements Serializable {
     }
 
     public void setEndDate() {
-        endDate=new Date();
+        endDate = new Date();
+        endDateS=ft.format(endDate);
+
     }
 
-    public Score getPlayer1Score() {
+    public int getPlayer1Score() {
         return player1Score;
     }
 
-    public void setPlayer1Score(Score player1Score) {
+    public void setPlayer1Score(int player1Score) {
         this.player1Score = player1Score;
     }
 
-    public Score getPlayer2Score() {
+    public int getPlayer2Score() {
         return player2Score;
     }
 
-    public void setPlayer2Score(Score player2Score) {
+    public void setPlayer2Score(int player2Score) {
         this.player2Score = player2Score;
     }
 
@@ -119,17 +129,21 @@ public class ScoreBoard implements Serializable {
     }
 
 
-    public int getID() { return ID; }
+    public int getID() {
+        return ID;
+    }
 
-    public void setID(int ID) { this.ID = ID;}
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
-    public void  write(ArrayList<ScoreBoard> scoreBoards) {
+    public void write( ObservableList<ScoreBoard> scoreBoards) {
         try {
             FileOutputStream fileOut = new FileOutputStream(filepath);
             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
 
 
-            objectOut.writeObject(scoreBoards);
+            objectOut.writeObject(new ArrayList<ScoreBoard>(scoreBoards));
 
             objectOut.close();
 
@@ -142,8 +156,7 @@ public class ScoreBoard implements Serializable {
         }
     }
 
-    public  ArrayList<ScoreBoard> read(){
-        ArrayList<ScoreBoard> sbs = new ArrayList<>();
+    public ObservableList<ScoreBoard> read() {
         try {
             try {
 
@@ -151,162 +164,89 @@ public class ScoreBoard implements Serializable {
 
                 ObjectInputStream objectOut = new ObjectInputStream(fileIn);
 
-                sbs = (ArrayList<ScoreBoard>) objectOut.readObject();
+                ArrayList<ScoreBoard> list = (ArrayList<ScoreBoard>) objectOut.readObject();
 
                 objectOut.close();
 
                 System.out.println("The Object ' ScoreBoard '  was succesfully read from the file");
 
-            }catch (IOException e){ }
-
-        } catch (Exception ex  ) { ex.printStackTrace();}
-        return sbs;
-    }
+                return FXCollections.observableList(list);
 
 
-
-        public void GUIScoreBord(boolean themeSelector){
-            if (themeSelector) {
-                themepath = "./DarkStyle.css";
-            } else if (!themeSelector)
-                themepath = "./style.css";
-            themeLight = getClass().getResource("../style.css").toExternalForm();
-            themeDark = getClass().getResource("../DarkStyle.css").toExternalForm();
-            Stage stage =  new Stage();
-            VBox mainScoreBoard = new VBox();
-            mainScoreBoard.getStylesheets().add(themepath);
-            mainScoreBoard.setAlignment(Pos.CENTER);
-//            mainScoreBoard.setStyle("-fx-border-style: solid; -fx-border-color: red ; -fx-border-width: 2px;");
-//        mainScoreBoard.setFillWidth(true);
-            Label scoreBoardWord = new Label("Score Board !");
-            scoreBoardWord.setAlignment(Pos.CENTER);
-            scoreBoardWord.getStyleClass().add("defaultLabel");
-            scoreBoardWord.setId("scoreBoardWord");
-            HBox scoreBoardFields = new HBox();
-            scoreBoardFields.setAlignment(Pos.CENTER);
-            VBox.setMargin(scoreBoardFields, new Insets(0 , 150, 0 ,0));
-            scoreBoardFields.getStylesheets().add(themepath);
-            Label idField = new Label("ID");
-            HBox.setMargin(idField, new Insets(20 , 0 ,10,0));
-            idField.getStyleClass().add("defaultLabel");
-            Label firstPlayerField = new Label("First Player");
-            firstPlayerField.getStyleClass().add("defaultLabel");
-            HBox.setMargin(firstPlayerField, new Insets( 20, 0 ,0,50));
-            Label firstPlayerScoreField = new Label("Score");
-            firstPlayerScoreField.getStyleClass().add("defaultLabel");
-            HBox.setMargin(firstPlayerScoreField, new Insets( 20, 0 ,0,70));
-            Label secondPlayerField = new Label("Second Player");
-            secondPlayerField.getStyleClass().add("defaultLabel");
-            HBox.setMargin(secondPlayerField, new Insets( 20, 0 ,0,50));
-            Label secondPlayerScoreField = new Label("Score");
-            secondPlayerScoreField.getStyleClass().add("defaultLabel");
-            HBox.setMargin(secondPlayerScoreField, new Insets( 20, 0 ,0,40));
-            Label startDateField = new Label("Start Date");
-            startDateField.getStyleClass().add("defaultLabel");
-            HBox.setMargin(startDateField, new Insets( 20, 0 ,0,100));
-            Label endDateField = new Label("End Date");
-            endDateField.getStyleClass().add("defaultLabel");
-            HBox.setMargin(endDateField, new Insets( 20, 0 ,0,150));
-
-            scoreBoardFields.getChildren().addAll(idField, firstPlayerField, firstPlayerScoreField, secondPlayerField, secondPlayerScoreField, startDateField, endDateField);
-            mainScoreBoard.getChildren().addAll(scoreBoardWord, scoreBoardFields);
-            ScrollPane scoreBoardScrollable = new ScrollPane();
-            JFXButton sortByIdButton = new JFXButton("Sort By ID");
-            JFXButton sortBystartDateButton = new JFXButton("Sort By Start Date");
-            JFXButton sortByEndDateButton = new JFXButton("Sort By End Date");
-
-
-            ArrayList<ScoreBoard> sbs = new ArrayList<>();
-            sbs = this.read();
-            ScoreBoard sb = new ScoreBoard();
-
-
-            HBox bordItem[] = new HBox[sbs.size()];
-            ScrollPane  mainScrollPane = new ScrollPane();
-
-
-            Label Idlabel[] = new Label[sbs.size()];
-            Label player1label[] = new Label[sbs.size()];
-            Label player2label[] = new Label[sbs.size()];
-            Label score1label[] = new Label[sbs.size()];
-            Label score2label[] = new Label[sbs.size()];
-            Label startTimelabel[]= new Label[sbs.size()];
-            Label endTimelabel[]= new Label[sbs.size()];
-            JFXButton load[] = new JFXButton[sbs.size()] ;
-            for(int i=0;i<sbs.size();i++){
-                sb = sbs.get(i);
-                Idlabel[i] = new Label();
-                player1label[i]= new Label();
-                player2label[i]=new Label();
-                score1label[i] = new Label();
-                score2label[i] = new Label();
-                startTimelabel[i]= new Label();
-                endTimelabel[i]= new Label();
-                bordItem[i] =new HBox();
-                load[i] = new JFXButton("load");
-                Idlabel[i].getStyleClass().add("defaultLabel");
-                Idlabel[i].setPrefWidth(30);
-//                Idlabel[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
-                Idlabel[i].setText(""+sb.getID());
-                HBox.setMargin(Idlabel[i], new Insets( 30, 0 ,0,0));
-                player1label[i].setText(sb.getP1Name());
-//                player1label[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
-                player1label[i].setPrefWidth(110);
-                HBox.setMargin(player1label[i], new Insets( 30, 0 ,0,50));
-                player1label[i].getStyleClass().add("defaultLabel");
-                player2label[i].setText(sb.getP2Name());
-//                player2label[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
-                HBox.setMargin(player2label[i], new Insets( 30, 0 ,0,50));
-                player2label[i].setPrefWidth(110);
-                player2label[i].getStyleClass().add("defaultLabel");
-                score1label[i].setText(""+sb.getPlayer1Score().getLatestScore());
-                score1label[i].setPrefWidth(50);
-//                score1label[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
-                HBox.setMargin(score1label[i], new Insets( 30, 0 ,0,40));
-                score1label[i].getStyleClass().add("defaultLabel");
-                score2label[i].setText(""+sb.getPlayer2Score().getLatestScore());
-                score2label[i].setPrefWidth(50);
-//                score2label[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
-                HBox.setMargin(score2label[i], new Insets( 30, 0 ,0,40));
-                score2label[i].getStyleClass().add("defaultLabel");
-                startTimelabel[i].setText(""+sb.getStartDate());
-//                startTimelabel[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
-                HBox.setMargin(startTimelabel[i], new Insets( 30, 0 ,0,75));
-                startTimelabel[i].setPrefWidth(200);
-                startTimelabel[i].getStyleClass().add("defaultLabel");
-                endTimelabel[i].setText(""+sb.getEndDate());
-                endTimelabel[i].setPrefWidth(200);
-//                endTimelabel[i].setStyle("-fx-border-width: 2px ; -fx-border-color: red");
-                HBox.setMargin(endTimelabel[i], new Insets( 30, 0 ,0,60));
-                endTimelabel[i].getStyleClass().add("defaultLabel");
-                HBox.setMargin(load[i], new Insets( 30, 0 ,0,0));
-                bordItem[i].getStylesheets().add(themepath);
-                bordItem[i].getChildren().addAll(
-                        Idlabel[i],
-                        player1label[i],
-                        score1label[i],
-                        player2label[i],
-                        score2label[i],
-                        startTimelabel[i],
-                        endTimelabel[i],
-                        load[i]);
-                bordItem[i].getStyleClass().add("scoreBoardBorderButtom");
-                mainScoreBoard.getStylesheets().add(themepath);
-                mainScoreBoard.getChildren().add(bordItem[i]);
+            } catch (IOException e) {
             }
-            mainScrollPane.setContent(mainScoreBoard);
-            HBox mHBox = new HBox();
-            mHBox.getChildren().add(mainScrollPane);
-            mHBox.getStylesheets().add(themepath);
-            mHBox.setAlignment(Pos.CENTER);
-            Scene scene = new Scene(mHBox);
-            stage.setScene(scene);
-            stage.setMaximized(true);
-            stage.setTitle("Score Bord");
-            stage.show();
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
+        return FXCollections.emptyObservableList();
+    }
+
+    public void GUIScoreBord(boolean themeSelector){
+        Stage stage =  new Stage();
+        stage.setTitle("Score Bord");
+        TableView<ScoreBoard> table;
+
+
+
+        //ID column
+        TableColumn<ScoreBoard, String> IDColumn = new TableColumn<>("Game_ID");
+        IDColumn.setMinWidth(50);
+        IDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
+
+        //Name column
+        TableColumn<ScoreBoard, String> name1Column = new TableColumn<>("first_player_Name");
+        name1Column.setMinWidth(100);
+        name1Column.setCellValueFactory(new PropertyValueFactory<>("p1Name"));
+        TableColumn<ScoreBoard, String> name2Column = new TableColumn<>("second_player_Name");
+        name2Column.setMinWidth(100);
+        name2Column.setCellValueFactory(new PropertyValueFactory<>("p2Name"));
+
+        //score column
+        TableColumn<ScoreBoard, Integer> score1Column = new TableColumn<>("first_player_score");
+        score1Column.setMinWidth(100);
+        score1Column.setCellValueFactory(new PropertyValueFactory<>("player1Score"));
+
+        TableColumn<ScoreBoard, Integer> score2Column = new TableColumn<>("second_player_score");
+        score2Column.setMinWidth(100);
+        score2Column.setCellValueFactory(new PropertyValueFactory<>("player2Score"));
+
+        //date column
+        TableColumn<ScoreBoard, String> startDateColumn = new TableColumn<>("Start Date");
+        startDateColumn.setMinWidth(150);
+        startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDateS"));
+
+        TableColumn<ScoreBoard, String> endDateColumn = new TableColumn<>("End Date");
+        endDateColumn.setMinWidth(150);
+        endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDateS"));
+
+
+
+
+
+
+        //read ScoreBord file and get the list
+        ObservableList<ScoreBoard> sbs=FXCollections.observableArrayList();
+        sbs=this.read();
+        //inti
+        table = new TableView<>();
+        table.setItems(sbs);
+        table.getColumns().addAll(
+                IDColumn,name1Column,
+                name2Column, score1Column,
+                score2Column, startDateColumn,
+                endDateColumn);
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(table);
+        Scene scene = new Scene(vBox);
+        stage.setScene(scene);
+        stage.show();
 
     }
+
+
+
+}
 
 
 

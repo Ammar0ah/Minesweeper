@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class DataInfo implements Serializable {
     public Grid grid;
     private boolean isSettingsActivated;
-    private GameMode gameMode;
     private GameMode gameMode =GameMode.CAN_BE_LOADED;
     private ArrayList<playerMove> playerMoves = new ArrayList<>();
     private int[] allsettingNumber = new int[4];
