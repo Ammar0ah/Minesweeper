@@ -19,8 +19,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.SimpleFormatter;
 
+<<<<<<< HEAD
 public class ScoreBoard   implements Serializable  {
     private int ID = 1;
+=======
+public class ScoreBoard  implements Serializable {
+    private int ID=1;
+>>>>>>> 9493756339af90c309290e481d09b9ffe3e64531
     private Date startDate = new Date();
     private Date endDate = new Date();
     private String startDateS ;

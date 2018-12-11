@@ -31,7 +31,7 @@ public class chooseLoadedGame {
     String themeLight;
     String themeDark;
     String themepath;
-    boolean loadedThemeSelctor ;
+    boolean loadedThemeSelctor;
 
     SaveAndLoad saveAndLoad = new SaveAndLoad();
 
@@ -42,7 +42,7 @@ public class chooseLoadedGame {
         if (themeSelector) {
             themepath = "./DarkStyle.css";
             loadedThemeSelctor = true;
-        } else if (!themeSelector){
+        } else if (!themeSelector) {
             themepath = "./style.css";
             loadedThemeSelctor = false;
         }
@@ -52,7 +52,7 @@ public class chooseLoadedGame {
         mainLoadList = new VBox();
         mainScrollPane = new ScrollPane();
         File filesArray[] = dir.listFiles();
-        System.out.println("length" +filesArray.length);
+        System.out.println("length" + filesArray.length);
         if (filesArray.length > 0) {
             gamesName = new Label[filesArray.length];
             firstPlayerName = new Label[filesArray.length];
@@ -71,7 +71,7 @@ public class chooseLoadedGame {
                 firstPlayerName[i].getStyleClass().add("defaultLabel");
                 firstPlayerName[i].setText(saveAndLoad.get_dataInfo().getPlayers().get(0).getName());
                 secondPlayerName[i] = new Label();
-                if (saveAndLoad.get_dataInfo().getPlayers().size() == 2){
+                if (saveAndLoad.get_dataInfo().getPlayers().size() == 2) {
                     secondPlayerName[i].getStyleClass().add("defaultLabel");
                     secondPlayerName[i].setText(saveAndLoad.get_dataInfo().getPlayers().get(1).getName());
                 }
@@ -85,8 +85,8 @@ public class chooseLoadedGame {
                 loadGameButton[i].setOnAction(e -> {
                     saveAndLoad.setSaveFile("./src/data/SavedGames/" + file.getName());
                     saveAndLoad.loadGameStateBinary();
-                    System.out.println("this"+file.getName());
-                    if (saveAndLoad.get_dataInfo().getGameMode() == GameMode.CAN_BE_LOADED){
+                    System.out.println("this" + file.getName());
+                    if (saveAndLoad.get_dataInfo().getGameMode() == GameMode.CAN_BE_LOADED) {
                         GUIGame guiGame = new GUIGame(
                                 saveAndLoad.get_dataInfo().getPlayers(),
                                 saveAndLoad.get_dataInfo().getGrid(),
@@ -94,10 +94,11 @@ public class chooseLoadedGame {
                                 saveAndLoad.get_dataInfo().getAllsettingNumber()[1],
                                 saveAndLoad.get_dataInfo().getAllsettingNumber()[2],
                                 saveAndLoad.get_dataInfo().getAllsettingNumber()[3],
-                                saveAndLoad.get_dataInfo().isSettingsActivated()
-                                );
+                                saveAndLoad.get_dataInfo().isSettingsActivated(),
+                                saveAndLoad.get_dataInfo().getGameMode()
+                        );
 
-                        if (saveAndLoad.get_dataInfo().getPlayers().size() ==1){
+                        if (saveAndLoad.get_dataInfo().getPlayers().size() == 1) {
                             window.setScene(guiGame.returnScene(
                                     saveAndLoad.get_dataInfo().getGrid().getWidth(),
                                     saveAndLoad.get_dataInfo().getGrid().getHeight(),
@@ -106,10 +107,10 @@ public class chooseLoadedGame {
                                     1100,
                                     700,
                                     loadedThemeSelctor,
-                                    saveAndLoad.get_dataInfo().getAllsettingNumber()[3]+"",
-                                    true
+                                    saveAndLoad.get_dataInfo().getAllsettingNumber()[3] + ""
+
                             ));
-                        }else {
+                        } else {
                             window.setScene(guiGame.returnScene(
                                     saveAndLoad.get_dataInfo().getGrid().getWidth(),
                                     saveAndLoad.get_dataInfo().getGrid().getHeight(),
@@ -118,8 +119,8 @@ public class chooseLoadedGame {
                                     1100,
                                     700,
                                     loadedThemeSelctor,
-                                    saveAndLoad.get_dataInfo().getAllsettingNumber()[3]+"",
-                                    true
+                                    saveAndLoad.get_dataInfo().getAllsettingNumber()[3] + ""
+
                             ));
                         }
                         window.show();
@@ -133,25 +134,17 @@ public class chooseLoadedGame {
                 HBox.setMargin(replayGameButton[i], new Insets(10, 0, 10, 70));
                 if (saveAndLoad.get_dataInfo().getGameMode() != GameMode.CAN_BE_REPLAYED) {
                     JFXButton btn = replayGameButton[i];
-                    btn.setOnMouseEntered(new EventHandler<MouseEvent>
-                            () {
-
-                        @Override
-                        public void handle(MouseEvent t) {
-                            Tooltip tooltip = new Tooltip("this Game isn't complete and can't be replayed");
-                            btn.setTooltip(tooltip);
-                            btn.setText("no replay file");
-                        }
-
+                    btn.setOnMouseEntered(e -> {
+                        Tooltip tooltip = new Tooltip("this Game isn't complete and can't be replayed");
+                        btn.setTooltip(tooltip);
+                        btn.setText("no replay file");
                     });
                     ;
                 } else {
                     replayGameButton[i].setOnAction(e -> {
                         ReplayGame replayGame = new ReplayGame();
                         replayGame.saveAndLoad.setSaveFile("./src/data/SavedGames/" + file.getName());
-                        Stage window = replayGame.init();
-                        window.show();
-                        replayGame.loadMoves();
+                        replayGame.start();
                     });
                 }
                 loadFileBoxes[i] = new HBox();

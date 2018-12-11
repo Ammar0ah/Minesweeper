@@ -3,14 +3,25 @@ package sample;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+enum Choice {LOAD, SAVE}
+
 public class DataInfo implements Serializable {
-    public Grid grid;
+    private Choice choice;
+    private Grid grid;
     private boolean isSettingsActivated;
     private GameMode gameMode =GameMode.CAN_BE_LOADED;
     private ArrayList<playerMove> playerMoves = new ArrayList<>();
     private int[] allsettingNumber = new int[4];
     private ArrayList<Player> players = new ArrayList<>();
     private ArrayList<Integer> timeList = new ArrayList<>();
+
+    public Choice getChoice() {
+        return choice;
+    }
+
+    public void setChoice(Choice choice) {
+        this.choice = choice;
+    }
 
     public Grid getGrid() {
         return grid;
@@ -68,19 +79,21 @@ public class DataInfo implements Serializable {
         this.timeList = timeList;
     }
 
-    public DataInfo(Grid grid,ArrayList<Player> _players) {
+    public DataInfo(Grid grid, ArrayList<Player> _players) {
         this.grid = grid;
         this.players = _players;
     }
 
-    public DataInfo(Grid grid,ArrayList<Player> _players, int bomb ,int blank , int flag ,int shields,boolean isSettingsActivated) {
+    public DataInfo(Grid grid, ArrayList<Player> _players, int bomb, int blank, int flag, int shields, boolean isSettingsActivated) {
         this.grid = grid;
-        this.allsettingNumber[0] = bomb ;
+        this.allsettingNumber[0] = bomb;
         this.allsettingNumber[1] = blank;
         this.allsettingNumber[2] = flag;
         this.allsettingNumber[3] = shields;
         this.isSettingsActivated = isSettingsActivated;
-        this.players = _players;
+        for (Player p:_players) {
+            players.add(p);
+        }
     }
 
     public DataInfo(Grid grid,ArrayList<Player> _players,ArrayList<playerMove> playerMoves, int bomb ,int blank , int flag ,int shields,boolean isSettingsActivated) {
