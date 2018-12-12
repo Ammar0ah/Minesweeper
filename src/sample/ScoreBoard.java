@@ -241,13 +241,14 @@ public class ScoreBoard   implements Serializable  {
                 score2Column, startDateColumn,
                 endDateColumn);
         VBox vBox = new VBox();
-        vBox.getStylesheets().add(themepath);
         HBox hbox = new HBox();
         hbox.getStylesheets().add(themepath);
-
+        hbox.setMaxHeight(50);
         JFXButton button = new JFXButton("Replay");
         button.getStyleClass().add("button-raised");
-        button.setMaxHeight(40);
+
+
+
             button.setOnMouseClicked(e->{
                 ReplayGame replayGame = new ReplayGame();
                     replayGame.saveAndLoad.setSaveFile(table.getSelectionModel().getSelectedItem().getGamefilepath());
@@ -256,11 +257,8 @@ public class ScoreBoard   implements Serializable  {
 
             });
         hbox.getChildren().addAll(button);
-        hbox.setMaxHeight(12);
         vBox.getChildren().addAll(table,hbox);
         Scene scene = new Scene(vBox);
-        stage.setMinWidth(600);
-        stage.setMinHeight(600);
         stage.setScene(scene);
         stage.show();
 

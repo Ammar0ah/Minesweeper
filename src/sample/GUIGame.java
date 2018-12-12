@@ -769,6 +769,7 @@ public class GUIGame extends NormalGame {
 
     public void saveData() {
         DataInfo data = new DataInfo(grid, players, playerMoves, bombScore, blankScore, flagScore, shieldsCount, actSettings);
+        gameMode = GameMode.CAN_BE_REPLAYED;
         data.setGameMode(GameMode.CAN_BE_REPLAYED);
         data.setScores(scores);
         saveOrLoad.set_dataInfo(data);
