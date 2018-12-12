@@ -69,7 +69,8 @@ public class GUIGame extends NormalGame {
     Label currPlayerLabel = new Label();
     Label timerLabel = new Label();
     Label scorelabel = new Label();
-    JFXButton nextBtn = new JFXButton();
+    JFXButton nextBtn = new JFXButton("Next");
+
 
 
     //// contsructors ////
@@ -269,7 +270,7 @@ public class GUIGame extends NormalGame {
                     button.setText("");
                     Image image = new Image(getClass().getResourceAsStream("shield.png"), 40, 40, true, true);
                     button.setGraphic(new ImageView(image));
-                    if (players.get(0).getName() == playerMove.getPlayer().getName()) {
+                    if (players.get(0).getName().equals(playerMove.getPlayer().getName())) {
                         shieldLabelLeft.setText(playerMove.getPlayer().getShield().getShieldCount() + "");
                     } else {
                         shieldLabelRight.setText(playerMove.getPlayer().getShield().getShieldCount() + "");
@@ -418,23 +419,30 @@ public class GUIGame extends NormalGame {
         /////////////////////////////////////////
 
 
-        TranslateTransition transition = new TranslateTransition();
-        transition.setToX(1890);
-        transition.setDuration(Duration.seconds(10));
-        transition.setAutoReverse(true);
-        transition.setCycleCount(Animation.INDEFINITE);
-        transition.setNode(timerCircle);
-        transition.play();
+//        TranslateTransition transition = new TranslateTransition();
+//        transition.setToX(1890);
+//        transition.setDuration(Duration.seconds(10));
+//        transition.setAutoReverse(true);
+//        transition.setCycleCount(Animation.INDEFINITE);
+//        transition.setNode(timerCircle);
+//        transition.play();
         ///label timer
         HBox timerView = new HBox();
         timerView.setAlignment(Pos.TOP_CENTER);
         timerView.minWidth(150);
+        timerView.getStylesheets().add(themepath);
         timerLabel = new Label("10");
+        timerLabel.setAlignment(Pos.CENTER);
+        timerLabel.getStyleClass().add("defaultLabel");
         timerLabel.setFont(Font.font(60));
         timer.TimerGUI(timerLabel);
-        Label turnLabel = new Label(" turn");
+        Label turnLabel = new Label(" Turn");
+        turnLabel.getStyleClass().add("defaultLabel");
+        turnLabel.setAlignment(Pos.CENTER);
         turnLabel.setFont(Font.font(60));
         currPlayerLabel = new Label(playerM.getPlayer().getName());
+        currPlayerLabel.setAlignment(Pos.CENTER);
+        currPlayerLabel.getStyleClass().add("defaultLabel");
         currPlayerLabel.setFont(Font.font(60));
 
         timerView.setPadding(new Insets(30));
@@ -451,6 +459,8 @@ public class GUIGame extends NormalGame {
         VBox leftMenu = new VBox();
         leftMenu.setAlignment(Pos.CENTER);
         leftMenu.setMinWidth(150);
+        leftMenu.getStylesheets().add(themepath);
+        leftMenu.getStyleClass().add("playersSideBox");
         double random = Math.random() * 9;
         String picUrl = "./assests/pic" + Math.round(random) + ".png";
         ImageView avatar = new ImageView(
@@ -458,6 +468,7 @@ public class GUIGame extends NormalGame {
         );
         avatar.getStyleClass().add("avatarStyle");
         HBox shieldBoxLeft = new HBox();
+        shieldBoxLeft.setAlignment(Pos.CENTER);
         shieldLabelLeft.setText(shieldsNum);
         shieldBoxLeft.getChildren().addAll(shieldImgLeft, shieldLabelLeft);
         leftMenu.getChildren().addAll(avatar, player1Name, shieldBoxLeft, scorelabel);
@@ -471,6 +482,8 @@ public class GUIGame extends NormalGame {
         VBox rightMenu = new VBox();
         rightMenu.setMinWidth(150);
         rightMenu.setAlignment(Pos.CENTER);
+        rightMenu.getStylesheets().add(themepath);
+        rightMenu.getStyleClass().add("playersSideBox");
         double random1 = Math.random() * 9;
         String picUrl1 = "./assests/pic" + Math.round(random1) + ".png";
         ImageView avatar1 = new ImageView(
@@ -480,6 +493,7 @@ public class GUIGame extends NormalGame {
             avatar1 = new ImageView(new Image("./assests/download.png", 75, 75, true, true));
         avatar.getStyleClass().add("avatarStyle");
         HBox shieldBoxRight = new HBox();
+        shieldBoxRight.setAlignment(Pos.CENTER);
         shieldLabelRight = new Label(shieldsNum);
         shieldBoxRight.getChildren().addAll(shieldImgRight, shieldLabelRight);
         rightMenu.getChildren().addAll(avatar1, player2Name, shieldBoxRight);
@@ -487,11 +501,14 @@ public class GUIGame extends NormalGame {
         HBox downMenu = new HBox();
         downMenu.setAlignment(Pos.CENTER);
         downMenu.setMinHeight(60);
+        downMenu.getStyleClass().add(themepath);
         cordX.setAlignment(Pos.CENTER);
         cordY.setAlignment(Pos.CENTER);
         cordX.getStyleClass().add("gameText");
         cordY.getStyleClass().add("gameText");
-        downMenu.getChildren().addAll(nextBtn);
+        nextBtn.getStyleClass().add("button-raised");
+        downMenu.getChildren().add(nextBtn);
+        HBox.setMargin(nextBtn, new Insets(0, 0 , 0 , 20 ));
         HBox topItems = new HBox();
 
         if (gameMode != GameMode.CAN_BE_REPLAYED) {
@@ -504,10 +521,12 @@ public class GUIGame extends NormalGame {
                 saveOrLoad.saveGameStateBinary();
 
             });
-            topItems.getChildren().addAll(saveGameButton, timerView);
+            topItems.getChildren().addAll(timerView);
+            downMenu.getChildren().add(saveGameButton);
 
         } else
             topItems.getChildren().addAll(timerView);
+
 
 
         borderPane.setLeft(leftMenu);
@@ -664,8 +683,9 @@ public class GUIGame extends NormalGame {
             } else
                 score.setPlayerscore(0);
 
-        else if (isNumeric(square.getMark()))
-            score.updateScore(Integer.parseInt(square.getMark()));
+        else if (isNumeric(square.getMark())){
+            int i=Integer.parseInt(square.getMark());
+            score.updateScore(i);}
 
         else if (square.getState() == squareState.STATE_FLAG && square.isHasBomb()) {
             if (actSettings) {

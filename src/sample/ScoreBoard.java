@@ -22,18 +22,20 @@ import java.util.logging.SimpleFormatter;
 
 public class ScoreBoard   implements Serializable  {
     private int ID = 1;
-    private Date startDate = new Date();
-    private Date endDate = new Date();
-    private String startDateS ;
-    private String endDateS ;
+    private String startDate ;
+    private String endDate ;
     private int player1Score ;
     private int player2Score ;
     private SimpleDateFormat ft = new SimpleDateFormat(" yyyy/mm/dd 'at' HH:mm:ss");
     private String p1Name;
     private String p2Name;
     private String filepath = "./src/data/ScoreBord.ran";
-    private String Gamefilepath = "./src/data/SavedGame/SavedData1";
+    private String Gamefilepath = null;
     private boolean canBeReplayed = false;
+
+    String themeLight;
+    String themeDark;
+    String themepath;
 
     public boolean isCanBeReplayed() {
         return canBeReplayed;
@@ -67,29 +69,21 @@ public class ScoreBoard   implements Serializable  {
     }
 
     public void setGamefilepath(int i) {
-        Gamefilepath = "./data/SavedGame/Game" + i + ".ran";
+        Gamefilepath = "./data/SavedGames/SavedData"+i+".ran";
     }
 
 
-    public Date getStartDate() {
-        System.out.println("Current Date: " + ft.format(startDate));
-        return startDate;
-    }
 
     public void setStartDate() {
-        startDate = new Date();
-        startDateS = ft.format(startDate);
+        Date date = new Date();
+        startDate =""+ft.format(date);
 
     }
 
-    public Date getEndDate() {
-        System.out.println("Current Date: " + ft.format(endDate));
-        return endDate;
-    }
 
     public void setEndDate() {
-        endDate = new Date();
-        endDateS=ft.format(endDate);
+        Date date = new Date();
+        endDate=ft.format(date);
 
     }
 
@@ -184,6 +178,13 @@ public class ScoreBoard   implements Serializable  {
     }
 
     public void GUIScoreBord(boolean themeSelector){
+        if (themeSelector) {
+            themepath = "./DarkStyle.css";
+                 } else if (!themeSelector) {
+            themepath = "./style.css";
+                 }
+        themeLight = getClass().getResource("../style.css").toExternalForm();
+        themeDark = getClass().getResource("../DarkStyle.css").toExternalForm();
         Stage stage =  new Stage();
         stage.setTitle("Score Bord");
         TableView<ScoreBoard> table;
@@ -215,16 +216,11 @@ public class ScoreBoard   implements Serializable  {
         //date column
         TableColumn<ScoreBoard, String> startDateColumn = new TableColumn<>("Start Date");
         startDateColumn.setMinWidth(150);
-        startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDateS"));
+        startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
         TableColumn<ScoreBoard, String> endDateColumn = new TableColumn<>("End Date");
         endDateColumn.setMinWidth(150);
-        endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDateS"));
-
-
-
-
-
+        endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         //read ScoreBord file and get the list
         ObservableList<ScoreBoard> sbs=FXCollections.observableArrayList();
@@ -238,8 +234,30 @@ public class ScoreBoard   implements Serializable  {
                 score2Column, startDateColumn,
                 endDateColumn);
         VBox vBox = new VBox();
-        vBox.getChildren().addAll(table);
+        vBox.getStylesheets().add(themepath);
+        HBox hbox = new HBox();
+        hbox.getStylesheets().add(themepath);
+
+        JFXButton button = new JFXButton("Replay");
+        button.getStyleClass().add("button-raised");
+        button.setMaxHeight(40);
+            button.setOnMouseClicked(e->{
+                ReplayGame replayGame = new ReplayGame();
+                //try {
+ //                   replayGame.saveAndLoad.setSaveFile(table.getSelectionModel().getSelectedItem().getGamefilepath());
+//              }catch (FileNotFoundException ex){ Alert alert = new Alert(Alert.AlertType.WARNING);
+//                  alert.setTitle("warning");
+//                  alert.setContentText("no replay file");}
+
+                replayGame.start();
+
+            });
+        hbox.getChildren().addAll(button);
+        hbox.setMaxHeight(12);
+        vBox.getChildren().addAll(table,hbox);
         Scene scene = new Scene(vBox);
+        stage.setMinWidth(600);
+        stage.setMinHeight(600);
         stage.setScene(scene);
         stage.show();
 

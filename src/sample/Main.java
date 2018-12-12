@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
@@ -110,8 +111,15 @@ public class Main extends Application {
         QuickGameButton.setId("openingButtons");
         QuickGameButton.setAlignment(Pos.CENTER);
         QuickGameButton.setOnAction(e ->{
-            window.setScene(guiGame.returnScene(guiGame.grid.getHeight(),guiGame.grid.getWidth(),"ammar","nader",
-                    1100,700,false, settingsGUI.shieldsCount));
+
+                try {
+                    load.quickLoad(themeSelector);
+                } catch (Exception ex){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("WARNING");
+                    alert.setContentText("there is no saved files");
+        }
+
         });
         JFXButton settingsButton = new JFXButton("Settings");
         settingsButton.getStyleClass().add("button-raised");

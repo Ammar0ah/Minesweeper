@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 public class chooseLoadedGame {
     private Stage window = new Stage();
@@ -36,6 +37,66 @@ public class chooseLoadedGame {
     SaveAndLoad saveAndLoad = new SaveAndLoad();
 
     File dir = new File("./src/data/SavedGames");
+
+     public void quickLoad(boolean themeSelector) throws FileNotFoundException {
+         if (themeSelector) {
+             themepath = "./DarkStyle.css";
+             loadedThemeSelctor = true;
+         } else if (!themeSelector) {
+             themepath = "./style.css";
+             loadedThemeSelctor = false;
+             themeLight = getClass().getResource("../style.css").toExternalForm();
+             themeDark = getClass().getResource("../DarkStyle.css").toExternalForm();
+         }
+         IdFile idFile = new IdFile();
+         int i = idFile.getI()-1;
+         while (i>0){
+                 saveAndLoad.setSaveFile("./src/data/SavedGames/SavedData" + i + ".ran");
+                 saveAndLoad.loadGameStateBinary();
+                 if (saveAndLoad.get_dataInfo().getGameMode() == GameMode.CAN_BE_LOADED) {
+                     GUIGame guiGame = new GUIGame(
+                             saveAndLoad.get_dataInfo().getPlayers(),
+                             saveAndLoad.get_dataInfo().getGrid(),
+                             saveAndLoad.get_dataInfo().getAllsettingNumber()[0],
+                             saveAndLoad.get_dataInfo().getAllsettingNumber()[1],
+                             saveAndLoad.get_dataInfo().getAllsettingNumber()[2],
+                             saveAndLoad.get_dataInfo().getAllsettingNumber()[3],
+                             saveAndLoad.get_dataInfo().isSettingsActivated(),
+                             saveAndLoad.get_dataInfo().getGameMode()
+                     );
+
+                     if (saveAndLoad.get_dataInfo().getPlayers().size() == 1) {
+                         window.setScene(guiGame.returnScene(
+                                 saveAndLoad.get_dataInfo().getGrid().getWidth(),
+                                 saveAndLoad.get_dataInfo().getGrid().getHeight(),
+                                 saveAndLoad.get_dataInfo().getPlayers().get(0).getName(),
+                                 "",
+                                 1100,
+                                 700,
+                                 loadedThemeSelctor,
+                                 saveAndLoad.get_dataInfo().getAllsettingNumber()[3] + ""
+
+                         ));
+                     } else {
+                         window.setScene(guiGame.returnScene(
+                                 saveAndLoad.get_dataInfo().getGrid().getWidth(),
+                                 saveAndLoad.get_dataInfo().getGrid().getHeight(),
+                                 saveAndLoad.get_dataInfo().getPlayers().get(0).getName(),
+                                 saveAndLoad.get_dataInfo().getPlayers().get(1).getName(),
+                                 1100,
+                                 700,
+                                 loadedThemeSelctor,
+                                 saveAndLoad.get_dataInfo().getAllsettingNumber()[3] + ""
+
+                         ));
+                     }
+                     window.show();
+                     break;
+                 }
+                 i--;
+             }
+     }
+
 
 
     public void openLoadList(boolean themeSelector) {
@@ -83,7 +144,9 @@ public class chooseLoadedGame {
                 loadGameButton[i].setId("loadListButton");
                 HBox.setMargin(loadGameButton[i], new Insets(10, 10, 10, 20));
                 loadGameButton[i].setOnAction(e -> {
-                    saveAndLoad.setSaveFile("./src/data/SavedGames/" + file.getName());
+                    try {
+                        saveAndLoad.setSaveFile("./src/data/SavedGames/" + file.getName());
+                    }catch (FileNotFoundException ex){}
                     saveAndLoad.loadGameStateBinary();
                     System.out.println("this" + file.getName());
                     if (saveAndLoad.get_dataInfo().getGameMode() == GameMode.CAN_BE_LOADED) {
@@ -143,7 +206,9 @@ public class chooseLoadedGame {
                 } else {
                     replayGameButton[i].setOnAction(e -> {
                         ReplayGame replayGame = new ReplayGame();
-                        replayGame.saveAndLoad.setSaveFile("./src/data/SavedGames/" + file.getName());
+                        try {
+                            replayGame.saveAndLoad.setSaveFile("./src/data/SavedGames/" + file.getName());
+                        }catch (FileNotFoundException ex){}
                         replayGame.start();
                     });
                 }

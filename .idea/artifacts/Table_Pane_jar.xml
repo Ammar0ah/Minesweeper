@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Table Pane:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Table_Pane_jar</output-path>
+    <root id="archive" name="Table Pane.jar">
+      <element id="module-output" name="Table Pane" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../jfoenix-8.0.7.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
