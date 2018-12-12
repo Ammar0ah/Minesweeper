@@ -26,7 +26,7 @@ public class ScoreBoard   implements Serializable  {
     private String endDate ;
     private int player1Score ;
     private int player2Score ;
-    private SimpleDateFormat ft = new SimpleDateFormat(" yyyy/mm/dd 'at' HH:mm:ss");
+    private SimpleDateFormat ft = new SimpleDateFormat("HH:mm:ss 'at' yyyy/mm/dd");
     private String p1Name;
     private String p2Name;
     private String filepath = "./src/data/ScoreBord.ran";
@@ -80,11 +80,18 @@ public class ScoreBoard   implements Serializable  {
 
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
 
     public void setEndDate() {
         Date date = new Date();
         endDate=ft.format(date);
 
+    }
+
+    public String getEndDate() {
+        return endDate;
     }
 
     public int getPlayer1Score() {

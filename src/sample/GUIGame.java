@@ -645,7 +645,6 @@ public class GUIGame extends NormalGame {
         if (players.size() > 1 && players.get(1).isAuto())
             autoMove();
         if (playerM.getPlayer().getResult() == Result.winner) {
-            }
             try {
                 if (players.get(1).getScore().getLatestScore() > players.get(0).getScore().getLatestScore()) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -673,6 +672,7 @@ public class GUIGame extends NormalGame {
             saveData();
             updateScoreBoard();
             endGame();
+        }
 
 
         playerMoves.add(playerM);

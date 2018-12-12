@@ -64,7 +64,7 @@ public class chooseLoadedGame {
                              saveAndLoad.get_dataInfo().isSettingsActivated(),
                              saveAndLoad.get_dataInfo().getGameMode()
                      );
-
+                      guiGame.scores = saveAndLoad.get_dataInfo().getScores();
                      if (saveAndLoad.get_dataInfo().getPlayers().size() == 1) {
                          window.setScene(guiGame.returnScene(
                                  saveAndLoad.get_dataInfo().getGrid().getWidth(),
