@@ -61,7 +61,6 @@ public class IdFile {
 
     private  void read(){
         try {
-
             FileInputStream fileIn = new FileInputStream(filepath);
 
             ObjectInputStream objectOut = new ObjectInputStream(fileIn);
@@ -72,14 +71,8 @@ public class IdFile {
 
             System.out.println("The Object  was succesfully read from the file");
 
-        } catch (FileNotFoundException ex) {
+        } catch (Exception ex) {
            writeI();
-        } catch (IOException e) {
-            writeI();
-
-        } catch (ClassNotFoundException e) {
-            writeI();
-
         }
 
     }
