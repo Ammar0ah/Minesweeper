@@ -2,9 +2,6 @@ package sample;
 
 
 import com.jfoenix.controls.JFXButton;
-import javafx.animation.Animation;
-import javafx.animation.TranslateTransition;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,12 +13,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import javafx.util.Duration;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
+
 import javafx.collections.FXCollections;
+import javafx.util.Pair;
 
 enum GameMode {NEW_GAME, CAN_BE_LOADED, CAN_BE_REPLAYED}
 
@@ -49,12 +45,16 @@ public class GUIGame extends NormalGame {
     ScoreBoard sb = new ScoreBoard();
     private String filepath;
     GameMode gameMode;
+    int i;
+    int j;
+    int temp;
     private DataInfo dataInfo;
     /// lists ///
     ObservableList<ScoreBoard> scoreBoards = FXCollections.observableArrayList();
     ArrayList<Player> players = new ArrayList<>();
     ArrayList<playerMove> playerMoves = new ArrayList<>();
     ArrayList<Integer> timeList = new ArrayList<>();
+    ArrayList<Pair<Integer, String>> scores = new ArrayList<>();
     /// gui ///
 
     ImageView timerCircle = new ImageView(
@@ -69,8 +69,8 @@ public class GUIGame extends NormalGame {
     Label currPlayerLabel = new Label();
     Label timerLabel = new Label();
     Label scorelabel = new Label();
+    Label scorelabel2 = new Label();
     JFXButton nextBtn = new JFXButton("Next");
-
 
 
     //// contsructors ////
@@ -306,7 +306,7 @@ public class GUIGame extends NormalGame {
                 gridButton.setPrefSize(buttonWidth, buttonHeight);
                 gridButton.setMinHeight(30);
                 gridButton.setMinWidth(40);
-                GridPane.setMargin(gridButton, new Insets(1));
+                GridPane.setMargin(gridButton, new Insets(3));
                 gridPane.getChildren().add(gridButton);
                 GridPane.setConstraints(gridButton, j, i);
                 if (gameMode == GameMode.NEW_GAME)
@@ -319,12 +319,28 @@ public class GUIGame extends NormalGame {
                     });
             }
         }
-        for (playerMove pm : playerMoves) {
-            nextBtn.setOnMouseClicked(e -> {
-                acceptMove(pm, players);
-                scorelabel.setText(pm.getPlayer().getScore().getLatestScore() + "");
-            });
-        }
+        nextBtn.setOnMouseClicked(e -> {
+
+            if (i == playerMoves.size()) {
+                nextBtn.setDisable(true);
+                return;
+            }
+            playerMove pm = playerMoves.get(i);
+            isaccepted = acceptMove(pm, players);
+            Button btn = getButtonByRowAndColumn(pm.getSquare().getI() , pm.getSquare().getJ(),gridPane);
+            btn.setText(i+1 +"");
+            btn.setStyle(" -fx-font-size: 25px ; -fx-background-color: #668BFF");
+            i++;
+            if (j != scores.size())
+                if (pm.getPlayer().getName().equals(players.get(0).getName()))
+                    scorelabel.setText("Score : " + scores.get(j).getKey() + "");
+                else
+                    scorelabel2.setText("Score : " + scores.get(j).getKey() + "");
+            j++;
+
+            if(!isaccepted)
+                checkBombCells();
+        });
         return gridPane;
     }
 
@@ -372,8 +388,10 @@ public class GUIGame extends NormalGame {
 
     public Scene returnScene(int w, int h, String name, String name2, int sceneWidth, int sceneHeight,
                              boolean themeSelector, String shieldsNum) {
-        timer.setPlayerMove(playerM);
-        timer.start();
+        if (gameMode != GameMode.CAN_BE_REPLAYED) {
+            timer.start();
+            timer.setPlayerMove(playerM);
+        }
         if (themeSelector) {
             themepath = "./DarkStyle.css";
             openedThemeSelctor = true;
@@ -419,13 +437,6 @@ public class GUIGame extends NormalGame {
         /////////////////////////////////////////
 
 
-//        TranslateTransition transition = new TranslateTransition();
-//        transition.setToX(1890);
-//        transition.setDuration(Duration.seconds(10));
-//        transition.setAutoReverse(true);
-//        transition.setCycleCount(Animation.INDEFINITE);
-//        transition.setNode(timerCircle);
-//        transition.play();
         ///label timer
         HBox timerView = new HBox();
         timerView.setAlignment(Pos.TOP_CENTER);
@@ -496,7 +507,7 @@ public class GUIGame extends NormalGame {
         shieldBoxRight.setAlignment(Pos.CENTER);
         shieldLabelRight = new Label(shieldsNum);
         shieldBoxRight.getChildren().addAll(shieldImgRight, shieldLabelRight);
-        rightMenu.getChildren().addAll(avatar1, player2Name, shieldBoxRight);
+        rightMenu.getChildren().addAll(avatar1, player2Name, shieldBoxRight, scorelabel2);
 
         HBox downMenu = new HBox();
         downMenu.setAlignment(Pos.CENTER);
@@ -508,7 +519,7 @@ public class GUIGame extends NormalGame {
         cordY.getStyleClass().add("gameText");
         nextBtn.getStyleClass().add("button-raised");
         downMenu.getChildren().add(nextBtn);
-        HBox.setMargin(nextBtn, new Insets(0, 0 , 0 , 20 ));
+        HBox.setMargin(nextBtn, new Insets(0, 0, 0, 20));
         HBox topItems = new HBox();
 
         if (gameMode != GameMode.CAN_BE_REPLAYED) {
@@ -517,6 +528,7 @@ public class GUIGame extends NormalGame {
             saveGameButton.setOnAction(e -> {
                 dataInfo.setGameMode(GameMode.CAN_BE_LOADED);
                 dataInfo.setPlayerMoves(playerMoves);
+                dataInfo.setScores(scores);
                 saveOrLoad.set_dataInfo(dataInfo);
                 saveOrLoad.saveGameStateBinary();
 
@@ -526,7 +538,6 @@ public class GUIGame extends NormalGame {
 
         } else
             topItems.getChildren().addAll(timerView);
-
 
 
         borderPane.setLeft(leftMenu);
@@ -554,12 +565,15 @@ public class GUIGame extends NormalGame {
         playerM.setSquare(square);
         timer.Reset();
 
-        if (players.size() > 1 && players.get(1).isAuto())
+        if (players.size() > 1 && players.get(1).isAuto()) {
             ip = 0;
-
+        }
         player = this.gameRules.decideNextPlayer(players, ip);
-        playerM.setPlayer(player);
+        if(gameMode == GameMode.CAN_BE_LOADED)
+            player.getScore().updateScore(scores.get(scores.size()-1).getKey());
 
+        player.setScore(temp);
+        playerM.setPlayer(player);
 
         if (players.size() > 1) {
             if (players.get(1).isAuto() && ip == 1) {
@@ -604,6 +618,10 @@ public class GUIGame extends NormalGame {
 
                 return true;
             } else {
+                for (playerMove pm : playerMoves) {
+                    System.out.println("score :" + pm.getPlayer().getScore().getLatestScore());
+                    System.out.println(pm.getSquare().getI() + " " + pm.getSquare().getJ());
+                }
                 gameMode = GameMode.CAN_BE_REPLAYED;
                 playerM.getPlayer().setResult(Result.loser);
                 playerM.getPlayer().setScore(0);
@@ -615,6 +633,7 @@ public class GUIGame extends NormalGame {
                     alert.setContentText(playerM.getPlayer().name + " " + "You Lost the game.You're score is:  " + String.valueOf(playerM.getPlayer().getScore().getLatestScore()));
                     alert.showAndWait();
                     timer.interrupt();
+                    playerMoves.add(playerM);
                     endGame();
                     saveData();
                     updateScoreBoard();
@@ -625,13 +644,13 @@ public class GUIGame extends NormalGame {
         }
 
 
-        playerMoves.add(playerM);
         ip = (ip + 1) % players.size();
         if (players.size() > 1 && players.get(1).isAuto())
             autoMove();
         if (playerM.getPlayer().getResult() == Result.winner) {
+            System.out.println("The moves list");
             for (playerMove pm : playerMoves) {
-                System.out.println("The moves list");
+                System.out.println("score :" + pm.getPlayer().getScore().getLatestScore());
                 System.out.println(pm.getSquare().getI() + " " + pm.getSquare().getJ());
             }
             try {
@@ -663,7 +682,10 @@ public class GUIGame extends NormalGame {
             endGame();
 
         }
-        playerM = new playerMove();
+        playerMoves.add(playerM);
+        scores.add(new Pair<>(player.getScore().getLatestScore(), player.getName()));
+        temp = player.getScore().getLatestScore();
+        playerM = new playerMove(player);
 
 
         return true;
@@ -707,10 +729,16 @@ public class GUIGame extends NormalGame {
             //score.updateScore(grid.getNumberofMines() * 100);
             endGame();
         }
+        if (players.get(0).getName().equals(player.getName()))
+            scorelabel.setText(player.getScore().getLatestScore() + "");
+
+        else scorelabel2.setText(player.getScore().getLatestScore() + "");
 
     }
 
     public void endGame() {
+        playerMoves.add(playerM);
+        scores.add(new Pair<>(playerM.getPlayer().getScore().getLatestScore(), playerM.getPlayer().getName()));
         for (int i = 0; i < grid.getHeight(); i++)
             for (int j = 0; j < grid.getWidth(); j++) {
                 Square cell = grid.getIndex(i, j);
@@ -749,9 +777,12 @@ public class GUIGame extends NormalGame {
     public void saveData() {
         DataInfo data = new DataInfo(grid, players, playerMoves, bombScore, blankScore, flagScore, shieldsCount, actSettings);
         data.setGameMode(GameMode.CAN_BE_REPLAYED);
+        data.setScores(scores);
         saveOrLoad.set_dataInfo(data);
         saveOrLoad.saveGameStateBinary();
         timer.interrupt();
+        for (int i = 0; i < scores.size(); i++)
+            System.out.println(scores.get(i).getKey() + " " + scores.get(i).getValue());
     }
 
 
@@ -777,7 +808,7 @@ public class GUIGame extends NormalGame {
             scoreBoards = sb.read();
             scoreBoards.add(sb);
             sb.write(scoreBoards);
-        }catch (Exception e){
+        } catch (Exception e) {
             sb.write(scoreBoards);
             updateScoreBoard();
         }

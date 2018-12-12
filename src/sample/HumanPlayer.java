@@ -8,6 +8,8 @@ import javafx.scene.control.Button;
 
 public class HumanPlayer extends Player {
     PlayerTimer playertimer;
+    public HumanPlayer(){
+    }
 
     @Override
     public playerMove getplayermove(Grid grid) {
@@ -58,7 +60,6 @@ public class HumanPlayer extends Player {
             System.out.println("You're out of the array !!! ");
             return getplayermove(grid);
         }
-
 
     }
 

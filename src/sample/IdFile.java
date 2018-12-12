@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class IdFile {
-    private  String filepath="./src/data/gameID.ran";
+    private  String filepath="D:\\Compressed\\Nader\\Minesweeper-master/src/data/gameID.ran";
     private int i=0;
 
 
@@ -61,6 +61,7 @@ public class IdFile {
 
     private  void read(){
         try {
+
             FileInputStream fileIn = new FileInputStream(filepath);
 
             ObjectInputStream objectOut = new ObjectInputStream(fileIn);
@@ -71,8 +72,14 @@ public class IdFile {
 
             System.out.println("The Object  was succesfully read from the file");
 
-        } catch (Exception ex) {
+        } catch (FileNotFoundException ex) {
            writeI();
+        } catch (IOException e) {
+            writeI();
+
+        } catch (ClassNotFoundException e) {
+            writeI();
+
         }
 
     }

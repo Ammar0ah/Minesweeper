@@ -97,7 +97,7 @@ public class chooseLoadedGame {
                                 saveAndLoad.get_dataInfo().isSettingsActivated(),
                                 saveAndLoad.get_dataInfo().getGameMode()
                         );
-
+                        guiGame.scores = saveAndLoad.get_dataInfo().getScores();
                         if (saveAndLoad.get_dataInfo().getPlayers().size() == 1) {
                             window.setScene(guiGame.returnScene(
                                     saveAndLoad.get_dataInfo().getGrid().getWidth(),
@@ -159,7 +159,7 @@ public class chooseLoadedGame {
             window.setTitle("Mine Sweeper Material");
             mainScrollPane.setContent(mainLoadList);
             mainScrollPane.getStylesheets().add(themepath);
-            scene = new Scene(mainScrollPane, 1100, 700);
+            scene = new Scene(mainScrollPane, 640, 800);
             window.setTitle("Load A Game");
             window.setScene(scene);
             window.show();

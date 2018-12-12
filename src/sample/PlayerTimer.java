@@ -63,14 +63,15 @@ public class PlayerTimer extends Thread {
                         if (players.size() > 1)
                             changePlayers();
                         else {
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("You Lost");
-                            alert.setContentText("You're out of time");
-                            guiGame.playerM.getPlayer().setResult(Result.loser);
-                            guiGame.gameMode = GameMode.CAN_BE_REPLAYED;
-                            guiGame.endGame();
-                            this.interrupt();
-                            alert.showAndWait();
+//                            Alert alert = new Alert(Alert.AlertType.ERROR);
+//                            alert.setTitle("You Lost");
+//                            alert.setContentText("You're out of time");
+//                            guiGame.playerM.getPlayer().setResult(Result.loser);
+//                            guiGame.gameMode = GameMode.CAN_BE_REPLAYED;
+//                            guiGame.endGame();
+//                            guiGame.saveData();
+//                            this.interrupt();
+//                            alert.showAndWait();
 
                         }
 

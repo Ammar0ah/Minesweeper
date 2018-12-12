@@ -70,6 +70,8 @@ public abstract class Player implements Serializable {
     }
 
     public abstract playerMove getplayermove(Grid grid);
+   public Player(){
 
+   }
 
 }

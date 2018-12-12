@@ -27,11 +27,12 @@ public class playerMove implements Serializable {
         MoveType = moveType;
     }
     public playerMove(){
+
     }
 
     public playerMove(Player player){
         this.player = player;
-        player.setScore(0);
+        player.score= new Score();
         this.square = square;
         isPossibleToMove = true;
 

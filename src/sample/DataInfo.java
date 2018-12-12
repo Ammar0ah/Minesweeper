@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.util.Pair;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,6 +16,15 @@ public class DataInfo implements Serializable {
     private int[] allsettingNumber = new int[4];
     private ArrayList<Player> players = new ArrayList<>();
     private ArrayList<Integer> timeList = new ArrayList<>();
+    private ArrayList<Pair<Integer , String>> scores = new ArrayList<>();
+
+    public ArrayList<Pair<Integer , String>> getScores() {
+        return scores;
+    }
+
+    public void setScores(ArrayList<Pair<Integer , String>> scores) {
+        this.scores = scores;
+    }
 
     public Choice getChoice() {
         return choice;
