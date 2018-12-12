@@ -73,6 +73,8 @@ public class GUIGame extends NormalGame {
     JFXButton nextBtn = new JFXButton("Next");
 
 
+
+
     //// contsructors ////
 
     public GUIGame(ArrayList<Player> _players, Grid grid1, int bmb, int blnk, int flag, int shields, boolean a, GameMode gameMode1) {
@@ -270,7 +272,7 @@ public class GUIGame extends NormalGame {
                     button.setText("");
                     Image image = new Image(getClass().getResourceAsStream("shield.png"), 40, 40, true, true);
                     button.setGraphic(new ImageView(image));
-                    if (players.get(0).getName() == playerMove.getPlayer().getName()) {
+                    if (players.get(0).getName().equals(playerMove.getPlayer().getName())) {
                         shieldLabelLeft.setText(playerMove.getPlayer().getShield().getShieldCount() + "");
                     } else {
                         shieldLabelRight.setText(playerMove.getPlayer().getShield().getShieldCount() + "");
@@ -435,8 +437,6 @@ public class GUIGame extends NormalGame {
                 new Image("./assests/shield.png", 40, 40, true, true)
         );
         /////////////////////////////////////////
-
-
         ///label timer
         HBox timerView = new HBox();
         timerView.setAlignment(Pos.TOP_CENTER);
@@ -519,7 +519,7 @@ public class GUIGame extends NormalGame {
         cordY.getStyleClass().add("gameText");
         nextBtn.getStyleClass().add("button-raised");
         downMenu.getChildren().add(nextBtn);
-        HBox.setMargin(nextBtn, new Insets(0, 0, 0, 20));
+        HBox.setMargin(nextBtn, new Insets(0, 0 , 0 , 20 ));
         HBox topItems = new HBox();
 
         if (gameMode != GameMode.CAN_BE_REPLAYED) {
@@ -618,10 +618,6 @@ public class GUIGame extends NormalGame {
 
                 return true;
             } else {
-                for (playerMove pm : playerMoves) {
-                    System.out.println("score :" + pm.getPlayer().getScore().getLatestScore());
-                    System.out.println(pm.getSquare().getI() + " " + pm.getSquare().getJ());
-                }
                 gameMode = GameMode.CAN_BE_REPLAYED;
                 playerM.getPlayer().setResult(Result.loser);
                 playerM.getPlayer().setScore(0);
@@ -644,14 +640,11 @@ public class GUIGame extends NormalGame {
         }
 
 
+        playerMoves.add(playerM);
         ip = (ip + 1) % players.size();
         if (players.size() > 1 && players.get(1).isAuto())
             autoMove();
         if (playerM.getPlayer().getResult() == Result.winner) {
-            System.out.println("The moves list");
-            for (playerMove pm : playerMoves) {
-                System.out.println("score :" + pm.getPlayer().getScore().getLatestScore());
-                System.out.println(pm.getSquare().getI() + " " + pm.getSquare().getJ());
             }
             try {
                 if (players.get(1).getScore().getLatestScore() > players.get(0).getScore().getLatestScore()) {
@@ -681,11 +674,11 @@ public class GUIGame extends NormalGame {
             updateScoreBoard();
             endGame();
 
-        }
+
         playerMoves.add(playerM);
         scores.add(new Pair<>(player.getScore().getLatestScore(), player.getName()));
         temp = player.getScore().getLatestScore();
-        playerM = new playerMove(player);
+        playerM = new playerMove();
 
 
         return true;
@@ -705,8 +698,9 @@ public class GUIGame extends NormalGame {
             } else
                 score.setPlayerscore(0);
 
-        else if (isNumeric(square.getMark()))
-            score.updateScore(Integer.parseInt(square.getMark()));
+        else if (isNumeric(square.getMark())){
+            int i=Integer.parseInt(square.getMark());
+            score.updateScore(i);}
 
         else if (square.getState() == squareState.STATE_FLAG && square.isHasBomb()) {
             if (actSettings) {
@@ -733,7 +727,6 @@ public class GUIGame extends NormalGame {
             scorelabel.setText(player.getScore().getLatestScore() + "");
 
         else scorelabel2.setText(player.getScore().getLatestScore() + "");
-
     }
 
     public void endGame() {
@@ -783,6 +776,9 @@ public class GUIGame extends NormalGame {
         timer.interrupt();
         for (int i = 0; i < scores.size(); i++)
             System.out.println(scores.get(i).getKey() + " " + scores.get(i).getValue());
+        saveOrLoad.set_dataInfo(data);
+        saveOrLoad.saveGameStateBinary();
+        timer.interrupt();
     }
 
 

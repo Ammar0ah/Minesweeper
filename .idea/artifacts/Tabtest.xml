@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Tabtest">
+    <output-path>$PROJECT_DIR$/out/artifacts/Tabtest</output-path>
+    <root id="archive" name="Table Pane.jar">
+      <element id="module-output" name="Table Pane" />
+      <element id="library" level="project" name="jfoenix-8.0.7" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/Compressed/JFoenix-master/jfoenix-8.0.7.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

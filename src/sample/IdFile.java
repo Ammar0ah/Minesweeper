@@ -72,6 +72,7 @@ public class IdFile {
 
             System.out.println("The Object  was succesfully read from the file");
 
+
         } catch (FileNotFoundException ex) {
            writeI();
         } catch (IOException e) {
@@ -79,6 +80,8 @@ public class IdFile {
 
         } catch (ClassNotFoundException e) {
             writeI();
+        } catch (Exception ex) {
+           writeI();
 
         }
 

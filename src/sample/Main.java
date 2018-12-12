@@ -110,8 +110,18 @@ public class Main extends Application {
         QuickGameButton.setId("openingButtons");
         QuickGameButton.setAlignment(Pos.CENTER);
         QuickGameButton.setOnAction(e ->{
-            window.setScene(guiGame.returnScene(guiGame.grid.getHeight(),guiGame.grid.getWidth(),"ammar","nader",
+            window.setScene(guiGame.returnScene(guiGame.grid.getHeight(),guiGame.grid.getWidth(),guiGame.players.get(0).name,
+                    guiGame.players.get(1).name,
                     1100,700,false, settingsGUI.shieldsCount));
+
+                try {
+                    load.quickLoad(themeSelector);
+                } catch (Exception ex){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("WARNING");
+                    alert.setContentText("there is no saved files");
+        }
+
         });
         JFXButton settingsButton = new JFXButton("Settings");
         settingsButton.getStyleClass().add("button-raised");

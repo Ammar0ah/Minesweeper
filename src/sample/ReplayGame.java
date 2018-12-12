@@ -21,25 +21,24 @@ public class ReplayGame extends Thread {
 
 
     @Override
-    public void run(){
+    public void run() {
         try {
 
-            Platform.runLater(() ->{
+            Platform.runLater(() -> {
                 init();
             });
 
+        } catch (IllegalStateException e) {
+
         }
-
-    catch (IllegalStateException e) {
-
     }
-    }
+
     private void loadInfos() {
         saveAndLoad.loadGameStateBinary();
         dataInfo = saveAndLoad.get_dataInfo();
-         settings = saveAndLoad.get_dataInfo().getAllsettingNumber();
+        settings = saveAndLoad.get_dataInfo().getAllsettingNumber();
         guiGame = new GUIGame(dataInfo.getPlayers(), dataInfo.getGrid(), settings[0], settings[1], settings[2], settings[3],
-                dataInfo.isSettingsActivated(),dataInfo.getGameMode());
+                dataInfo.isSettingsActivated(), dataInfo.getGameMode());
         guiGame.playerMoves = dataInfo.getPlayerMoves();
         guiGame.scores = dataInfo.getScores();
 
@@ -50,14 +49,14 @@ public class ReplayGame extends Thread {
         window.setWidth(850);
         window.setHeight(850);
         window.show();
-        if(dataInfo.getPlayers().size() > 1)
-        window.setScene(guiGame.returnScene(dataInfo.getGrid().getWidth(),dataInfo.getGrid().getHeight(),
-                dataInfo.getPlayers().get(0).getName(), dataInfo.getPlayers().get(1).getName(),
-                1100,700,false,String.valueOf(settings[3])));
+        if (dataInfo.getPlayers().size() > 1)
+            window.setScene(guiGame.returnScene(dataInfo.getGrid().getWidth(), dataInfo.getGrid().getHeight(),
+                    dataInfo.getPlayers().get(0).getName(), dataInfo.getPlayers().get(1).getName(),
+                    1100, 700, false, String.valueOf(settings[3])));
 
-        window.setScene(guiGame.returnScene(dataInfo.getGrid().getWidth(),dataInfo.getGrid().getHeight(),
-                dataInfo.getPlayers().get(0).getName(),"",
-                1100,700,false,String.valueOf(settings[3])));
+        window.setScene(guiGame.returnScene(dataInfo.getGrid().getWidth(), dataInfo.getGrid().getHeight(),
+                dataInfo.getPlayers().get(0).getName(), "",
+        1100, 700, false, String.valueOf(settings[3])));
     }
 
 

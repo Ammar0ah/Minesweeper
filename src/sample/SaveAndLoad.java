@@ -1,11 +1,8 @@
 package sample;
 
 
-import javafx.scene.input.MouseEvent;
-
-import javax.xml.crypto.Data;
+import javafx.scene.control.Alert;
 import java.io.*;
-import java.util.ArrayList;
 
 public class SaveAndLoad extends Thread {
     private File saveFile;
@@ -30,8 +27,11 @@ public class SaveAndLoad extends Thread {
         this.saveNumber = saveNumber;
     }
 
-    public void setSaveFile(String saveFile) {
-        this.saveFile = new File(saveFile);
+    public void setSaveFile (String saveFile) {
+
+            this.saveFile = new File(saveFile);
+
+
     }
     public void SaveAndLoad(){
         saveFile = new File("./src/data/SavedGames/SavedData" + (saveNumber) + ".ran");
@@ -62,10 +62,16 @@ public class SaveAndLoad extends Thread {
 
     public void loadGameStateBinary() {
         try {
-            ObjectInputStream objInputStream = new ObjectInputStream(new FileInputStream(saveFile));
+            try {
+                ObjectInputStream objInputStream = new ObjectInputStream(new FileInputStream(saveFile));
 
-            _dataInfo = (DataInfo) objInputStream.readObject();
-            objInputStream.close();
+                _dataInfo = (DataInfo) objInputStream.readObject();
+                objInputStream.close();
+            }catch (FileNotFoundException e){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("WARNING");
+                alert.setContentText("there is no saved files");
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
